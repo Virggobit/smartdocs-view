@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
 import logo from "@/assets/logo-sol.png";
+import heroBackground from "@/assets/hero-solar-house.jpg";
 
 export const Hero = () => {
   const scrollToSimulator = () => {
@@ -8,11 +9,15 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-solar-lightBlue via-primary to-solar-blue">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-solar-yellow/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-solar-orange/20 rounded-full blur-3xl animate-pulse delay-1000" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src={heroBackground} 
+          alt="Casa com painéis solares" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-solar-blue/80 via-primary/70 to-solar-blue/80" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
