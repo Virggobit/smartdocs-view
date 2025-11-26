@@ -1,8 +1,12 @@
-import { Home, BarChart3, Calculator, BookOpen, Settings, Sun, Zap } from 'lucide-react';
+import { Home, BarChart3, Calculator, BookOpen, Settings, Sun, LogOut } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
 import logo from "@/assets/logo-sol.png";
 
 export const AppSidebar = () => {
+  const { signOut } = useAuth();
+  
   const menuLinks = [
     { to: '/', icon: Home, label: 'Início' },
     { to: '/dashboard', icon: BarChart3, label: 'Dashboard' },
@@ -41,7 +45,7 @@ export const AppSidebar = () => {
       </nav>
 
       {/* Footer Info */}
-      <div className="p-4 border-t border-border">
+      <div className="p-4 border-t border-border space-y-3">
         <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-solar-yellow/10 to-solar-orange/10 rounded-lg">
           <Sun className="h-8 w-8 text-solar-yellow" />
           <div>
@@ -49,6 +53,15 @@ export const AppSidebar = () => {
             <p className="text-xs text-muted-foreground">na sua conta de luz</p>
           </div>
         </div>
+        
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start gap-3" 
+          onClick={signOut}
+        >
+          <LogOut className="h-5 w-5" />
+          <span className="font-medium">Sair</span>
+        </Button>
       </div>
     </aside>
   );

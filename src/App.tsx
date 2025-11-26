@@ -4,11 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppSidebar } from "./components/AppSidebar";
+import { AuthProvider } from "./hooks/useAuth";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Simulator from "./pages/Simulator";
 import Trilhas from "./pages/Trilhas";
 import Settings from "./pages/Settings";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,19 +33,52 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          {/* Landing Page sem sidebar */}
-          <Route path="/" element={<Index />} />
-          
-          {/* Rotas com sidebar (dashboard) */}
-          <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
-          <Route path="/simulador" element={<DashboardLayout><Simulator /></DashboardLayout>} />
-          <Route path="/trilhas" element={<DashboardLayout><Trilhas /></DashboardLayout>} />
-          <Route path="/configuracoes" element={<DashboardLayout><Settings /></DashboardLayout>} />
-          
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            {/* Landing Page sem sidebar */}
+            <Route path="/" element={<Index />} />
+            
+            {/* Auth Page */}
+            <Route path="/auth" element={<Auth />} />
+            
+            {/* Rotas protegidas com sidebar (dashboard) */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout><Dashboard /></DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/simulador" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout><Simulator /></DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/trilhas" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout><Trilhas /></DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/configuracoes" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout><Settings /></DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
