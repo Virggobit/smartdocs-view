@@ -24,7 +24,7 @@ export const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center text-center text-primary-foreground">
           {/* Logo */}
-          <img src={logo} alt="Sol Logo" className="w-32 h-32 mb-8 drop-shadow-2xl" />
+          <img src={logo} alt="Sol Logo" className="w-64 h-64 mb-8 drop-shadow-2xl" />
           
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
