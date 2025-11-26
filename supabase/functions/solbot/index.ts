@@ -18,13 +18,20 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    // Simulated profiles data for matching
+    // Simulated profiles data for matching - Pará cities
     const availableProfiles = [
-      { id: 1, location: "São Paulo", kwGenerated: 15, type: "eu_gero", name: "João Silva" },
-      { id: 2, location: "Rio de Janeiro", kwGenerated: 20, type: "eu_gero", name: "Maria Santos" },
-      { id: 3, location: "São Paulo", kwGenerated: 10, type: "eu_gero", name: "Pedro Costa" },
-      { id: 4, location: "Belo Horizonte", kwGenerated: 25, type: "eu_gero", name: "Ana Paula" },
-      { id: 5, location: "São Paulo", kwGenerated: 18, type: "eu_gero", name: "Carlos Oliveira" },
+      { id: 1, location: "Belém", kwGenerated: 15, type: "eu_gero", name: "João Silva" },
+      { id: 2, location: "Belém", kwGenerated: 20, type: "eu_gero", name: "Maria Santos" },
+      { id: 3, location: "Ananindeua", kwGenerated: 12, type: "eu_gero", name: "Pedro Costa" },
+      { id: 4, location: "Ananindeua", kwGenerated: 18, type: "eu_gero", name: "Ana Paula" },
+      { id: 5, location: "Castanhal", kwGenerated: 10, type: "eu_gero", name: "Carlos Oliveira" },
+      { id: 6, location: "Castanhal", kwGenerated: 22, type: "eu_gero", name: "Fernanda Lima" },
+      { id: 7, location: "Santarém", kwGenerated: 25, type: "eu_gero", name: "Roberto Souza" },
+      { id: 8, location: "Santarém", kwGenerated: 16, type: "eu_gero", name: "Juliana Alves" },
+      { id: 9, location: "Salinópolis", kwGenerated: 14, type: "eu_gero", name: "Marcos Pereira" },
+      { id: 10, location: "Salinópolis", kwGenerated: 19, type: "eu_gero", name: "Camila Rocha" },
+      { id: 11, location: "Parauapebas", kwGenerated: 30, type: "eu_gero", name: "Lucas Martins" },
+      { id: 12, location: "Parauapebas", kwGenerated: 28, type: "eu_gero", name: "Patricia Ferreira" },
     ];
 
     const systemPrompt = `Você é o SolBot, um assistente de IA especializado em energia solar que ajuda a fazer matches inteligentes entre geradores e consumidores de energia solar.
