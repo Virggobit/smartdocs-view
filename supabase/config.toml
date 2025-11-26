@@ -1,1 +1,4 @@
 project_id = "nxjeiwjzxioktjbaisde"
+
+[functions.solbot]
+verify_jwt = false
