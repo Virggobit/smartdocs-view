@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo-sol.png";
 import heroBackground from "@/assets/hero-solar-house.jpg";
 
@@ -73,8 +74,9 @@ export const Hero = () => {
               size="lg" 
               variant="outline"
               className="bg-white/10 backdrop-blur-sm border-white/30 text-primary-foreground hover:bg-white/20 px-8 py-6 text-lg rounded-full"
+              asChild
             >
-              Ver Dashboard
+              <Link to="/dashboard">Ver Dashboard</Link>
             </Button>
           </div>
         </div>
