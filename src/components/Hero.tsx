@@ -76,7 +76,7 @@ export const Hero = () => {
               className="bg-white/10 backdrop-blur-sm border-white/30 text-primary-foreground hover:bg-white/20 px-8 py-6 text-lg rounded-full"
               asChild
             >
-              <Link to="/dashboard">Ver Dashboard</Link>
+              <Link to="/auth">Fazer Login</Link>
             </Button>
           </div>
         </div>
