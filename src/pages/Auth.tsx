@@ -17,7 +17,7 @@ const signupSchema = z.object({
   email: z.string().trim().email('Email inválido').max(255, 'Email muito longo'),
   phone: z.string().trim().min(10, 'Telefone inválido').max(20, 'Telefone inválido'),
   password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres').max(100, 'Senha muito longa'),
-  trilha: z.enum(['eu_gero', 'eu_assino'], { required_error: 'Escolha uma trilha' }),
+  trilha: z.enum(['eu_gero', 'eu_assino', 'eu_instalo'], { required_error: 'Escolha uma trilha' }),
 });
 
 const loginSchema = z.object({
@@ -33,7 +33,7 @@ const Auth = () => {
     email: '',
     phone: '',
     password: '',
-    trilha: '' as 'eu_gero' | 'eu_assino' | '',
+    trilha: '' as 'eu_gero' | 'eu_assino' | 'eu_instalo' | '',
   });
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -202,7 +202,7 @@ const Auth = () => {
                   <Label>Escolha sua trilha</Label>
                   <RadioGroup
                     value={formData.trilha}
-                    onValueChange={(value) => setFormData({ ...formData, trilha: value as 'eu_gero' | 'eu_assino' })}
+                    onValueChange={(value) => setFormData({ ...formData, trilha: value as 'eu_gero' | 'eu_assino' | 'eu_instalo' })}
                     className="space-y-3"
                   >
                     <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
@@ -224,6 +224,17 @@ const Auth = () => {
                         </Label>
                         <p className="text-sm text-muted-foreground">
                           Assine e receba créditos de energia
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
+                      <RadioGroupItem value="eu_instalo" id="eu_instalo" className="mt-1" />
+                      <div className="flex-1">
+                        <Label htmlFor="eu_instalo" className="font-semibold cursor-pointer">
+                          Eu Instalo
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          Instalador profissional de sistemas solares
                         </p>
                       </div>
                     </div>

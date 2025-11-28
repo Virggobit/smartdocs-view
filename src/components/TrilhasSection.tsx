@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Home, FileText, TrendingDown, Shield } from "lucide-react";
+import { Home, FileText, TrendingDown, Shield, Wrench } from "lucide-react";
 
 export const TrilhasSection = () => {
   return (
@@ -11,11 +11,11 @@ export const TrilhasSection = () => {
             Escolha Sua <span className="text-primary">Trilha Solar</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Duas soluções pensadas para você economizar, seja proprietário ou não
+            Três soluções completas de energia solar para você
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {/* Eu Gero */}
           <Card className="relative overflow-hidden border-2 hover:border-primary transition-all hover:shadow-xl group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-solar-yellow to-solar-orange opacity-10 rounded-bl-full" />
@@ -134,6 +134,67 @@ export const TrilhasSection = () => {
 
               <Button className="w-full bg-accent hover:bg-accent/90" size="lg">
                 Quero Assinar Energia
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Eu Instalo */}
+          <Card className="relative overflow-hidden border-2 hover:border-solar-blue transition-all hover:shadow-xl group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-solar-blue to-primary opacity-10 rounded-bl-full" />
+            <CardHeader>
+              <div className="w-12 h-12 bg-solar-blue/10 rounded-xl flex items-center justify-center mb-4">
+                <Wrench className="w-6 h-6 text-solar-blue" />
+              </div>
+              <CardTitle className="text-3xl">Eu Instalo</CardTitle>
+              <CardDescription className="text-lg">Para instaladores e técnicos</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-solar-blue/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-solar-blue" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Treinamento completo</strong> em instalação solar
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-solar-blue/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-solar-blue" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Certificação profissional</strong> reconhecida
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-solar-blue/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-solar-blue" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Gestão de projetos</strong> e logística
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-solar-blue/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-solar-blue" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Rede de oportunidades</strong> de trabalho
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-solar-blue/10 rounded-xl p-4 border border-solar-blue/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Wrench className="w-5 h-5 text-solar-blue" />
+                  <span className="font-semibold text-solar-blue">Profissional Qualificado</span>
+                </div>
+                <p className="text-2xl font-bold">Certificado</p>
+                <p className="text-sm text-muted-foreground">Seja um instalador autorizado</p>
+              </div>
+
+              <Button className="w-full bg-solar-blue hover:bg-solar-blue/90 text-white" size="lg">
+                Quero Me Tornar Instalador
               </Button>
             </CardContent>
           </Card>

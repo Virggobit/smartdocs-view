@@ -52,7 +52,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      trilha_type: "eu_gero" | "eu_assino"
+      trilha_type: "eu_gero" | "eu_assino" | "eu_instalo"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -180,7 +180,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      trilha_type: ["eu_gero", "eu_assino"],
+      trilha_type: ["eu_gero", "eu_assino", "eu_instalo"],
     },
   },
 } as const
