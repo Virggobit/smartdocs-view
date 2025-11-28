@@ -15,6 +15,7 @@ const recentAccounts = [
   { name: "Maria Silva", cpf: "***.***.123-45", trilha: "Eu Gero", status: "Ativo", date: "20/11/2025" },
   { name: "João Santos", cpf: "***.***.678-90", trilha: "Eu Assino", status: "Aprovado", date: "19/11/2025" },
   { name: "Ana Costa", cpf: "***.***.234-56", trilha: "Eu Gero", status: "Instalando", date: "18/11/2025" },
+  { name: "Carlos Ferreira", cpf: "***.***.456-78", trilha: "Eu Instalo", status: "Ativo", date: "18/11/2025" },
   { name: "Pedro Oliveira", cpf: "***.***.789-01", trilha: "Eu Assino", status: "Análise", date: "18/11/2025" },
   { name: "Carla Souza", cpf: "***.***.345-67", trilha: "Eu Gero", status: "Aprovado", date: "17/11/2025" },
 ];
@@ -22,6 +23,7 @@ const recentAccounts = [
 const trilhaData = [
   { name: "Eu Gero", value: 340, color: "hsl(203, 89%, 30%)" },
   { name: "Eu Assino", value: 180, color: "hsl(142, 71%, 45%)" },
+  { name: "Eu Instalo", value: 95, color: "hsl(48, 96%, 53%)" },
 ];
 
 const statusColors: Record<string, string> = {
@@ -137,7 +139,7 @@ export const DashboardSection = () => {
           <Card className="border-2">
             <CardHeader>
               <CardTitle>Distribuição por Trilha</CardTitle>
-              <CardDescription>Eu Gero vs Eu Assino</CardDescription>
+              <CardDescription>Eu Gero, Eu Assino e Eu Instalo</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-center">
@@ -161,7 +163,7 @@ export const DashboardSection = () => {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-3 gap-4 mt-4">
                 <div className="text-center p-3 bg-primary/10 rounded-lg border border-primary/20">
                   <div className="text-2xl font-bold text-primary">340</div>
                   <div className="text-sm text-muted-foreground">Eu Gero</div>
@@ -169,6 +171,10 @@ export const DashboardSection = () => {
                 <div className="text-center p-3 bg-accent/10 rounded-lg border border-accent/20">
                   <div className="text-2xl font-bold text-accent">180</div>
                   <div className="text-sm text-muted-foreground">Eu Assino</div>
+                </div>
+                <div className="text-center p-3 bg-solar-yellow/10 rounded-lg border border-solar-yellow/20">
+                  <div className="text-2xl font-bold text-solar-yellow">95</div>
+                  <div className="text-sm text-muted-foreground">Eu Instalo</div>
                 </div>
               </div>
             </CardContent>
@@ -202,6 +208,8 @@ export const DashboardSection = () => {
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${
                           account.trilha === "Eu Gero" 
                             ? "bg-primary/10 text-primary border border-primary/20"
+                            : account.trilha === "Eu Instalo"
+                            ? "bg-solar-yellow/10 text-solar-yellow border border-solar-yellow/20"
                             : "bg-accent/10 text-accent border border-accent/20"
                         }`}>
                           {account.trilha}
