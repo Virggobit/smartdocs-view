@@ -14,6 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
+      credit_analysis: {
+        Row: {
+          analysis_data: Json | null
+          approved_amount: number | null
+          created_at: string | null
+          id: string
+          interest_rate: number | null
+          score: number | null
+          status: Database["public"]["Enums"]["credit_status"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          analysis_data?: Json | null
+          approved_amount?: number | null
+          created_at?: string | null
+          id?: string
+          interest_rate?: number | null
+          score?: number | null
+          status?: Database["public"]["Enums"]["credit_status"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          analysis_data?: Json | null
+          approved_amount?: number | null
+          created_at?: string | null
+          id?: string
+          interest_rate?: number | null
+          score?: number | null
+          status?: Database["public"]["Enums"]["credit_status"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      energy_bills: {
+        Row: {
+          average_consumption: number | null
+          average_payment: number | null
+          created_at: string | null
+          extracted_data: Json | null
+          file_url: string | null
+          id: string
+          on_time_payments: number | null
+          payment_history_months: number | null
+          status: Database["public"]["Enums"]["bill_status"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          average_consumption?: number | null
+          average_payment?: number | null
+          created_at?: string | null
+          extracted_data?: Json | null
+          file_url?: string | null
+          id?: string
+          on_time_payments?: number | null
+          payment_history_months?: number | null
+          status?: Database["public"]["Enums"]["bill_status"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          average_consumption?: number | null
+          average_payment?: number | null
+          created_at?: string | null
+          extracted_data?: Json | null
+          file_url?: string | null
+          id?: string
+          on_time_payments?: number | null
+          payment_history_months?: number | null
+          status?: Database["public"]["Enums"]["bill_status"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      open_finance_connections: {
+        Row: {
+          bank_code: string
+          connected_at: string | null
+          connection_status: string | null
+          consent_id: string | null
+          created_at: string | null
+          expires_at: string | null
+          financial_data: Json | null
+          id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          bank_code: string
+          connected_at?: string | null
+          connection_status?: string | null
+          consent_id?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          financial_data?: Json | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          bank_code?: string
+          connected_at?: string | null
+          connection_status?: string | null
+          consent_id?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          financial_data?: Json | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -52,6 +169,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      bill_status: "pending_upload" | "processing" | "validated" | "invalid"
+      credit_status:
+        | "pending"
+        | "analyzing"
+        | "approved"
+        | "rejected"
+        | "requires_more_info"
       trilha_type: "eu_gero" | "eu_assino" | "eu_instalo"
     }
     CompositeTypes: {
@@ -180,6 +304,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      bill_status: ["pending_upload", "processing", "validated", "invalid"],
+      credit_status: [
+        "pending",
+        "analyzing",
+        "approved",
+        "rejected",
+        "requires_more_info",
+      ],
       trilha_type: ["eu_gero", "eu_assino", "eu_instalo"],
     },
   },

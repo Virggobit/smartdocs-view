@@ -12,6 +12,7 @@ import Simulator from "./pages/Simulator";
 import Trilhas from "./pages/Trilhas";
 import Settings from "./pages/Settings";
 import Auth from "./pages/Auth";
+import ConnectEnergy from "./pages/ConnectEnergy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,16 @@ const App = () => (
             
             {/* Auth Page */}
             <Route path="/auth" element={<Auth />} />
+            
+            {/* Conectar Energia - Protegida mas sem sidebar */}
+            <Route 
+              path="/conectar-energia" 
+              element={
+                <ProtectedRoute>
+                  <ConnectEnergy />
+                </ProtectedRoute>
+              } 
+            />
             
             {/* Rotas protegidas com sidebar (dashboard) */}
             <Route 

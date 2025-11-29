@@ -86,10 +86,10 @@ const Auth = () => {
 
       toast({
         title: 'Cadastro realizado!',
-        description: 'Você já pode acessar sua conta.',
+        description: 'Agora vamos validar seu crédito',
       });
       
-      navigate('/dashboard');
+      navigate('/conectar-energia');
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({

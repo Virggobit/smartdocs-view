@@ -2,3 +2,9 @@ project_id = "nxjeiwjzxioktjbaisde"
 
 [functions.solbot]
 verify_jwt = false
+
+[functions.analyze-energy-bill]
+verify_jwt = true
+
+[functions.connect-open-finance]
+verify_jwt = true
