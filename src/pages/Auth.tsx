@@ -17,7 +17,7 @@ const signupSchema = z.object({
   email: z.string().trim().email('Email inválido').max(255, 'Email muito longo'),
   phone: z.string().trim().min(10, 'Telefone inválido').max(20, 'Telefone inválido'),
   password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres').max(100, 'Senha muito longa'),
-  trilha: z.enum(['eu_gero', 'eu_assino', 'eu_instalo'], { required_error: 'Escolha uma trilha' }),
+  role: z.enum(['cliente_gero', 'cliente_assino', 'instalador', 'admin_banco', 'gestor_cooperativa'], { required_error: 'Escolha um perfil' }),
 });
 
 const loginSchema = z.object({
@@ -33,7 +33,7 @@ const Auth = () => {
     email: '',
     phone: '',
     password: '',
-    trilha: '' as 'eu_gero' | 'eu_assino' | 'eu_instalo' | '',
+    role: '' as 'cliente_gero' | 'cliente_assino' | 'instalador' | 'admin_banco' | 'gestor_cooperativa' | '',
   });
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ const Auth = () => {
           data: {
             full_name: validated.fullName,
             phone: validated.phone,
-            trilha: validated.trilha,
+            role: validated.role,
           },
         },
       });
@@ -199,42 +199,53 @@ const Auth = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <Label>Escolha sua trilha</Label>
+                  <Label>Escolha seu perfil</Label>
                   <RadioGroup
-                    value={formData.trilha}
-                    onValueChange={(value) => setFormData({ ...formData, trilha: value as 'eu_gero' | 'eu_assino' | 'eu_instalo' })}
+                    value={formData.role}
+                    onValueChange={(value) => setFormData({ ...formData, role: value as any })}
                     className="space-y-3"
                   >
                     <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
-                      <RadioGroupItem value="eu_gero" id="eu_gero" className="mt-1" />
+                      <RadioGroupItem value="cliente_gero" id="cliente_gero" className="mt-1" />
                       <div className="flex-1">
-                        <Label htmlFor="eu_gero" className="font-semibold cursor-pointer">
-                          Eu Gero
+                        <Label htmlFor="cliente_gero" className="font-semibold cursor-pointer">
+                          Cliente - Eu Gero
                         </Label>
                         <p className="text-sm text-muted-foreground">
-                          Instale painéis solares na sua propriedade
+                          Sou proprietário e quero instalar painéis solares
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
-                      <RadioGroupItem value="eu_assino" id="eu_assino" className="mt-1" />
+                      <RadioGroupItem value="cliente_assino" id="cliente_assino" className="mt-1" />
                       <div className="flex-1">
-                        <Label htmlFor="eu_assino" className="font-semibold cursor-pointer">
-                          Eu Assino
+                        <Label htmlFor="cliente_assino" className="font-semibold cursor-pointer">
+                          Cliente - Eu Assino
                         </Label>
                         <p className="text-sm text-muted-foreground">
-                          Assine e receba créditos de energia
+                          Sou locatário e quero receber créditos de energia
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
-                      <RadioGroupItem value="eu_instalo" id="eu_instalo" className="mt-1" />
+                      <RadioGroupItem value="instalador" id="instalador" className="mt-1" />
                       <div className="flex-1">
-                        <Label htmlFor="eu_instalo" className="font-semibold cursor-pointer">
-                          Eu Instalo
+                        <Label htmlFor="instalador" className="font-semibold cursor-pointer">
+                          Instalador Parceiro
                         </Label>
                         <p className="text-sm text-muted-foreground">
-                          Instalador profissional de sistemas solares
+                          Sou profissional instalador de sistemas solares
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
+                      <RadioGroupItem value="gestor_cooperativa" id="gestor_cooperativa" className="mt-1" />
+                      <div className="flex-1">
+                        <Label htmlFor="gestor_cooperativa" className="font-semibold cursor-pointer">
+                          Gestor de Cooperativa
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          Administro fazendas solares e cooperativas
                         </p>
                       </div>
                     </div>
