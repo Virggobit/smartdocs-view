@@ -13,6 +13,9 @@ import Trilhas from "./pages/Trilhas";
 import Settings from "./pages/Settings";
 import Auth from "./pages/Auth";
 import ConnectEnergy from "./pages/ConnectEnergy";
+import AdminDashboard from "./pages/AdminDashboard";
+import InstallerDashboard from "./pages/InstallerDashboard";
+import CooperativaDashboard from "./pages/CooperativaDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,7 +60,31 @@ const App = () => (
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <DashboardLayout><Dashboard /></DashboardLayout>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/instalador" 
+              element={
+                <ProtectedRoute>
+                  <InstallerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/cooperativa" 
+              element={
+                <ProtectedRoute>
+                  <CooperativaDashboard />
                 </ProtectedRoute>
               } 
             />
