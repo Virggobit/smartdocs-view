@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      cooperative_terms: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: string | null
+          signature_hash: string | null
+          signature_metadata: Json | null
+          signed_at: string | null
+          status: string
+          term_content: string
+          term_version: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          signature_hash?: string | null
+          signature_metadata?: Json | null
+          signed_at?: string | null
+          status?: string
+          term_content: string
+          term_version?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          signature_hash?: string | null
+          signature_metadata?: Json | null
+          signed_at?: string | null
+          status?: string
+          term_content?: string
+          term_version?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       credit_analysis: {
         Row: {
           analysis_data: Json | null
