@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Simulator from "./pages/Simulator";
 import Trilhas from "./pages/Trilhas";
+import Marketplace from "./pages/Marketplace";
 import Settings from "./pages/Settings";
 import Auth from "./pages/Auth";
 import ConnectEnergy from "./pages/ConnectEnergy";
@@ -119,6 +120,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <DashboardLayout><Trilhas /></DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/marketplace" 
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout><Marketplace /></DashboardLayout>
                 </ProtectedRoute>
               } 
             />
