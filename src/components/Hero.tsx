@@ -24,28 +24,45 @@ export const Hero = () => {
       <div className="container mx-auto px-4 pt-24 md:pt-32 relative z-10">
         <div className="flex flex-col items-center text-center text-primary-foreground">
           {/* Logo */}
-          <img src={logo} alt="Sol Logo" className="w-64 h-64 mb-8 drop-shadow-2xl" />
+          <img 
+            src={logo} 
+            alt="Sol Logo" 
+            className="w-64 h-64 mb-8 drop-shadow-2xl animate-scale-in" 
+            style={{ animationDelay: "0.1s", animationFillMode: "backwards" }}
+          />
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
+          <div 
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20 animate-fade-in"
+            style={{ animationDelay: "0.3s", animationFillMode: "backwards" }}
+          >
             <Zap className="w-4 h-4 text-solar-yellow" />
             <span className="text-sm font-medium">Energia Solar Acessível para Todos</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 max-w-4xl leading-tight">
+          <h1 
+            className="text-5xl md:text-7xl font-bold mb-6 max-w-4xl leading-tight animate-fade-in"
+            style={{ animationDelay: "0.5s", animationFillMode: "backwards" }}
+          >
             Sua Conta de Luz{" "}
             <span className="text-solar-yellow">Mais Barata</span>{" "}
             Desde o Primeiro Mês
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl text-primary-foreground/90">
+          <p 
+            className="text-xl md:text-2xl mb-8 max-w-2xl text-primary-foreground/90 animate-fade-in"
+            style={{ animationDelay: "0.7s", animationFillMode: "backwards" }}
+          >
             Financiamento solar sem burocracia, usando seu histórico de pagamento de energia como garantia.
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 mb-12 max-w-3xl w-full">
+          <div 
+            className="grid grid-cols-3 gap-8 mb-12 max-w-3xl w-full animate-fade-in"
+            style={{ animationDelay: "0.9s", animationFillMode: "backwards" }}
+          >
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <div className="text-3xl font-bold text-solar-yellow mb-2">-70%</div>
               <div className="text-sm text-primary-foreground/80">Economia Média</div>
@@ -61,7 +78,10 @@ export const Hero = () => {
           </div>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div 
+            className="flex flex-col sm:flex-row gap-4 animate-fade-in"
+            style={{ animationDelay: "1.1s", animationFillMode: "backwards" }}
+          >
             <Button 
               size="lg" 
               onClick={scrollToSimulator}
