@@ -347,7 +347,12 @@ export type Database = {
         | "approved"
         | "rejected"
         | "requires_more_info"
-      trilha_type: "eu_gero" | "eu_assino" | "eu_instalo"
+      trilha_type:
+        | "eu_gero"
+        | "eu_assino"
+        | "eu_instalo"
+        | "eu_financio"
+        | "eu_distribuo"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -492,7 +497,13 @@ export const Constants = {
         "rejected",
         "requires_more_info",
       ],
-      trilha_type: ["eu_gero", "eu_assino", "eu_instalo"],
+      trilha_type: [
+        "eu_gero",
+        "eu_assino",
+        "eu_instalo",
+        "eu_financio",
+        "eu_distribuo",
+      ],
     },
   },
 } as const

@@ -17,13 +17,17 @@ const recentAccounts = [
   { name: "Ana Costa", cpf: "***.***.234-56", trilha: "Eu Gero", status: "Instalando", date: "18/11/2025" },
   { name: "Carlos Ferreira", cpf: "***.***.456-78", trilha: "Eu Instalo", status: "Ativo", date: "18/11/2025" },
   { name: "Pedro Oliveira", cpf: "***.***.789-01", trilha: "Eu Assino", status: "Análise", date: "18/11/2025" },
-  { name: "Carla Souza", cpf: "***.***.345-67", trilha: "Eu Gero", status: "Aprovado", date: "17/11/2025" },
+  { name: "Banco do Brasil", cpf: "***.***.345-67", trilha: "Eu Financio", status: "Ativo", date: "17/11/2025" },
+  { name: "Cooperativa Solar PA", cpf: "***.***.890-12", trilha: "Eu Distribuo", status: "Ativo", date: "17/11/2025" },
+  { name: "Carla Souza", cpf: "***.***.345-67", trilha: "Eu Gero", status: "Aprovado", date: "16/11/2025" },
 ];
 
 const trilhaData = [
   { name: "Eu Gero", value: 340, color: "hsl(203, 89%, 30%)" },
   { name: "Eu Assino", value: 180, color: "hsl(142, 71%, 45%)" },
   { name: "Eu Instalo", value: 95, color: "hsl(48, 96%, 53%)" },
+  { name: "Eu Financio", value: 68, color: "hsl(142, 76%, 36%)" },
+  { name: "Eu Distribuo", value: 52, color: "hsl(271, 91%, 65%)" },
 ];
 
 const statusColors: Record<string, string> = {
@@ -138,8 +142,8 @@ export const DashboardSection = () => {
           {/* Trilha Distribution */}
           <Card className="border-2">
             <CardHeader>
-              <CardTitle>Distribuição por Trilha</CardTitle>
-              <CardDescription>Eu Gero, Eu Assino e Eu Instalo</CardDescription>
+              <CardTitle>Distribuição por Trilhas</CardTitle>
+              <CardDescription>Todas as modalidades da plataforma Sol</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-center">
@@ -163,7 +167,7 @@ export const DashboardSection = () => {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="grid grid-cols-3 gap-4 mt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
                 <div className="text-center p-3 bg-primary/10 rounded-lg border border-primary/20">
                   <div className="text-2xl font-bold text-primary">340</div>
                   <div className="text-sm text-muted-foreground">Eu Gero</div>
@@ -175,6 +179,14 @@ export const DashboardSection = () => {
                 <div className="text-center p-3 bg-solar-yellow/10 rounded-lg border border-solar-yellow/20">
                   <div className="text-2xl font-bold text-solar-yellow">95</div>
                   <div className="text-sm text-muted-foreground">Eu Instalo</div>
+                </div>
+                <div className="text-center p-3 bg-green-600/10 rounded-lg border border-green-600/20">
+                  <div className="text-2xl font-bold text-green-600">68</div>
+                  <div className="text-sm text-muted-foreground">Eu Financio</div>
+                </div>
+                <div className="text-center p-3 bg-purple-600/10 rounded-lg border border-purple-600/20">
+                  <div className="text-2xl font-bold text-purple-600">52</div>
+                  <div className="text-sm text-muted-foreground">Eu Distribuo</div>
                 </div>
               </div>
             </CardContent>
@@ -210,7 +222,11 @@ export const DashboardSection = () => {
                             ? "bg-primary/10 text-primary border border-primary/20"
                             : account.trilha === "Eu Instalo"
                             ? "bg-solar-yellow/10 text-solar-yellow border border-solar-yellow/20"
-                            : "bg-accent/10 text-accent border border-accent/20"
+                            : account.trilha === "Eu Assino"
+                            ? "bg-accent/10 text-accent border border-accent/20"
+                            : account.trilha === "Eu Financio"
+                            ? "bg-green-600/10 text-green-600 border border-green-600/20"
+                            : "bg-purple-600/10 text-purple-600 border border-purple-600/20"
                         }`}>
                           {account.trilha}
                         </span>
