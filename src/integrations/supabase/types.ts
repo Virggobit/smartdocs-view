@@ -330,6 +330,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      validate_token_transfer: {
+        Args: { _amount_kwh: number; _from_user_id: string; _token_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role:

@@ -3,7 +3,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenMarketplace } from "@/components/TokenMarketplace";
 import { MyPurchases } from "@/components/MyPurchases";
 import { MarketplaceFilters, FilterOptions } from "@/components/MarketplaceFilters";
-import { Store, ShoppingBag } from "lucide-react";
+import { TokenTransfer } from "@/components/TokenTransfer";
+import { Store, ShoppingBag, ArrowRightLeft } from "lucide-react";
 
 const Marketplace = () => {
   const [filters, setFilters] = useState<FilterOptions | undefined>(undefined);
@@ -29,7 +30,7 @@ const Marketplace = () => {
         </div>
 
         <Tabs defaultValue="marketplace" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 max-w-md">
+          <TabsList className="grid w-full grid-cols-3 max-w-2xl">
             <TabsTrigger value="marketplace" className="flex items-center gap-2">
               <Store className="w-4 h-4" />
               Marketplace
@@ -37,6 +38,10 @@ const Marketplace = () => {
             <TabsTrigger value="purchases" className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" />
               Minhas Compras
+            </TabsTrigger>
+            <TabsTrigger value="transfer" className="flex items-center gap-2">
+              <ArrowRightLeft className="w-4 h-4" />
+              Transferir
             </TabsTrigger>
           </TabsList>
 
@@ -81,6 +86,10 @@ const Marketplace = () => {
 
           <TabsContent value="purchases">
             <MyPurchases />
+          </TabsContent>
+
+          <TabsContent value="transfer">
+            <TokenTransfer />
           </TabsContent>
         </Tabs>
       </div>
