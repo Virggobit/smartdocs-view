@@ -2,9 +2,20 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenMarketplace } from "@/components/TokenMarketplace";
 import { MyPurchases } from "@/components/MyPurchases";
+import { MarketplaceFilters, FilterOptions } from "@/components/MarketplaceFilters";
 import { Store, ShoppingBag } from "lucide-react";
 
 const Marketplace = () => {
+  const [filters, setFilters] = useState<FilterOptions | undefined>(undefined);
+
+  const handleFilterChange = (newFilters: FilterOptions) => {
+    setFilters(newFilters);
+  };
+
+  const handleResetFilters = () => {
+    setFilters(undefined);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -54,7 +65,18 @@ const Marketplace = () => {
               </div>
             </div>
 
-            <TokenMarketplace />
+            <div className="grid lg:grid-cols-4 gap-6">
+              <div className="lg:col-span-1">
+                <MarketplaceFilters 
+                  onFilterChange={handleFilterChange}
+                  onReset={handleResetFilters}
+                />
+              </div>
+              
+              <div className="lg:col-span-3">
+                <TokenMarketplace filters={filters} />
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="purchases">
