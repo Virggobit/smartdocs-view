@@ -134,6 +134,48 @@ export type Database = {
         }
         Relationships: []
       }
+      energy_tokens: {
+        Row: {
+          amount_kwh: number
+          created_at: string
+          created_by: string
+          farm_id: string
+          farm_name: string
+          id: string
+          metadata: Json | null
+          price_per_kwh: number
+          status: string
+          token_id: string
+          total_value: number | null
+        }
+        Insert: {
+          amount_kwh: number
+          created_at?: string
+          created_by: string
+          farm_id: string
+          farm_name: string
+          id?: string
+          metadata?: Json | null
+          price_per_kwh: number
+          status?: string
+          token_id: string
+          total_value?: number | null
+        }
+        Update: {
+          amount_kwh?: number
+          created_at?: string
+          created_by?: string
+          farm_id?: string
+          farm_name?: string
+          id?: string
+          metadata?: Json | null
+          price_per_kwh?: number
+          status?: string
+          token_id?: string
+          total_value?: number | null
+        }
+        Relationships: []
+      }
       open_finance_connections: {
         Row: {
           bank_code: string
@@ -203,6 +245,53 @@ export type Database = {
         }
         Relationships: []
       }
+      token_transactions: {
+        Row: {
+          amount_kwh: number
+          block_timestamp: string
+          from_user_id: string | null
+          id: string
+          metadata: Json | null
+          status: string
+          to_user_id: string
+          token_id: string
+          transaction_hash: string
+          transaction_type: string
+        }
+        Insert: {
+          amount_kwh: number
+          block_timestamp?: string
+          from_user_id?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          to_user_id: string
+          token_id: string
+          transaction_hash: string
+          transaction_type: string
+        }
+        Update: {
+          amount_kwh?: number
+          block_timestamp?: string
+          from_user_id?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          to_user_id?: string
+          token_id?: string
+          transaction_hash?: string
+          transaction_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "token_transactions_token_id_fkey"
+            columns: ["token_id"]
+            isOneToOne: false
+            referencedRelation: "energy_tokens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -229,6 +318,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_transaction_hash: { Args: never; Returns: string }
       get_user_roles: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"][]
