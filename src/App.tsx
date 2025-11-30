@@ -16,6 +16,8 @@ import ConnectEnergy from "./pages/ConnectEnergy";
 import AdminDashboard from "./pages/AdminDashboard";
 import InstallerDashboard from "./pages/InstallerDashboard";
 import CooperativaDashboard from "./pages/CooperativaDashboard";
+import FinanciadorDashboard from "./pages/FinanciadorDashboard";
+import DistribuidorDashboard from "./pages/DistribuidorDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -89,6 +91,22 @@ const App = () => (
               } 
             />
             <Route 
+              path="/financiador" 
+              element={
+                <ProtectedRoute>
+                  <FinanciadorDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/distribuidor" 
+              element={
+                <ProtectedRoute>
+                  <DistribuidorDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route
               path="/simulador" 
               element={
                 <ProtectedRoute>

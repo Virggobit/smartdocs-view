@@ -27,6 +27,12 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
         case 'gestor_cooperativa':
           navigate('/cooperativa', { replace: true });
           break;
+        case 'parceiro_financeiro':
+          navigate('/financiador', { replace: true });
+          break;
+        case 'gestor_distribuicao':
+          navigate('/distribuidor', { replace: true });
+          break;
         // cliente_gero and cliente_assino stay on /dashboard
       }
     }

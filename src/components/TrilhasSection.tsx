@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Home, FileText, TrendingDown, Shield, Wrench } from "lucide-react";
+import { Home, FileText, TrendingDown, Shield, Wrench, DollarSign, Network } from "lucide-react";
 
 export const TrilhasSection = () => {
   return (
@@ -11,11 +11,11 @@ export const TrilhasSection = () => {
             Escolha Sua <span className="text-primary">Trilha Solar</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Três soluções completas de energia solar para você
+            Cinco soluções completas de energia solar para você
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-[1600px] mx-auto">
           {/* Eu Gero */}
           <Card className="relative overflow-hidden border-2 hover:border-primary transition-all hover:shadow-xl group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-solar-yellow to-solar-orange opacity-10 rounded-bl-full" />
@@ -195,6 +195,128 @@ export const TrilhasSection = () => {
 
               <Button className="w-full bg-solar-blue hover:bg-solar-blue/90 text-white" size="lg">
                 Quero Me Tornar Instalador
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Eu Financio */}
+          <Card className="relative overflow-hidden border-2 hover:border-green-600 transition-all hover:shadow-xl group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-600 to-green-800 opacity-10 rounded-bl-full" />
+            <CardHeader>
+              <div className="w-12 h-12 bg-green-600/10 rounded-xl flex items-center justify-center mb-4">
+                <DollarSign className="w-6 h-6 text-green-600" />
+              </div>
+              <CardTitle className="text-3xl">Eu Financio</CardTitle>
+              <CardDescription className="text-lg">Para parceiros Banco do Brasil</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-green-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-green-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Financiamento direto</strong> para seus clientes
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-green-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-green-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Análise de crédito</strong> integrada e automatizada
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-green-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-green-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Gestão de carteira</strong> completa
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-green-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-green-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Dashboard analítico</strong> em tempo real
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-green-600/10 rounded-xl p-4 border border-green-600/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <DollarSign className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold text-green-600">Parceiro Oficial</span>
+                </div>
+                <p className="text-2xl font-bold">Banco do Brasil</p>
+                <p className="text-sm text-muted-foreground">Financiamento facilitado</p>
+              </div>
+
+              <Button className="w-full bg-green-600 hover:bg-green-700 text-white" size="lg">
+                Quero Ser Parceiro Financeiro
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Eu Distribuo */}
+          <Card className="relative overflow-hidden border-2 hover:border-purple-600 transition-all hover:shadow-xl group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-600 to-purple-800 opacity-10 rounded-bl-full" />
+            <CardHeader>
+              <div className="w-12 h-12 bg-purple-600/10 rounded-xl flex items-center justify-center mb-4">
+                <Network className="w-6 h-6 text-purple-600" />
+              </div>
+              <CardTitle className="text-3xl">Eu Distribuo</CardTitle>
+              <CardDescription className="text-lg">Para cooperativas e consórcios</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-purple-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Gestão de fazendas</strong> solares
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-purple-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Tokenização de créditos</strong> de energia
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-purple-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Marketplace integrado</strong> para clientes
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-2 h-2 rounded-full bg-purple-600" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Relatórios completos</strong> de distribuição
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-purple-600/10 rounded-xl p-4 border border-purple-600/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Network className="w-5 h-5 text-purple-600" />
+                  <span className="font-semibold text-purple-600">Plataforma Completa</span>
+                </div>
+                <p className="text-2xl font-bold">Gestão Digital</p>
+                <p className="text-sm text-muted-foreground">Tokenização e distribuição</p>
+              </div>
+
+              <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white" size="lg">
+                Quero Gerir Distribuição
               </Button>
             </CardContent>
           </Card>
