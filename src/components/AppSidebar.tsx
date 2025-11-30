@@ -19,7 +19,7 @@ export const AppSidebar = () => {
   return (
     <aside className="w-64 min-h-screen bg-card border-r border-border flex flex-col">
       {/* Logo */}
-      <div className="p-6 border-b border-border">
+      <div className="p-6 pt-8 border-b border-border">
         <div className="flex items-center gap-3">
           <img src={logo} alt="Sol Logo" className="h-10 w-auto" />
           <div>
