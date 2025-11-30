@@ -10,12 +10,15 @@ export const SimulatorSection = () => {
   const [consumption, setConsumption] = useState<number>(450);
   const [profileType, setProfileType] = useState<"eu_gero" | "eu_assino">("eu_gero");
   
+  // Validação do consumo - mínimo de 100 kWh para cálculos válidos
+  const validConsumption = Math.max(consumption, 0);
+  
   // Cálculos base
   const avgTariff = 0.78;
-  const currentBill = consumption * avgTariff;
+  const currentBill = validConsumption * avgTariff;
   
   // Cálculos para "Eu Gero"
-  const systemSize = Math.ceil(consumption / 100);
+  const systemSize = validConsumption > 0 ? Math.ceil(validConsumption / 100) : 0;
   const generation = systemSize * 100;
   const billWithSolarGero = currentBill * 0.15; // 85% reduction (taxa mínima)
   const monthlySavingsGero = currentBill - billWithSolarGero;
@@ -28,10 +31,10 @@ export const SimulatorSection = () => {
   // Cálculos para "Eu Assino"
   const subscriptionDiscount = 0.15; // 15% de desconto na tarifa
   const billWithSolarAssino = currentBill * (1 - subscriptionDiscount);
-  const monthlySavingsAssino = currentBill - billWithSolarAssino;
+  const monthlySavingsAssino = currentBill * subscriptionDiscount;
   const yearlySavingsAssino = monthlySavingsAssino * 12;
   const savings25YearsAssino = yearlySavingsAssino * 25;
-  const monthlySubscription = consumption * avgTariff * (1 - subscriptionDiscount);
+  const monthlySubscription = billWithSolarAssino;
 
   return (
     <section id="simulator" className="py-24 bg-gradient-to-br from-muted/50 to-background">
