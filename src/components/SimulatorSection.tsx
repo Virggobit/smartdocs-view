@@ -3,22 +3,35 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Calculator, TrendingUp, Lightbulb, DollarSign } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calculator, TrendingUp, Lightbulb, DollarSign, Zap } from "lucide-react";
 
 export const SimulatorSection = () => {
-  const [consumption, setConsumption] = useState(450);
+  const [consumption, setConsumption] = useState<number>(450);
+  const [profileType, setProfileType] = useState<"eu_gero" | "eu_assino">("eu_gero");
   
+  // Cálculos base
   const avgTariff = 0.78;
+  const currentBill = consumption * avgTariff;
+  
+  // Cálculos para "Eu Gero"
   const systemSize = Math.ceil(consumption / 100);
   const generation = systemSize * 100;
-  const currentBill = consumption * avgTariff;
-  const billWithSolar = currentBill * 0.22; // 78% reduction
-  const monthlySavings = currentBill - billWithSolar;
-  const yearlySavings = monthlySavings * 12;
-  const savings25Years = yearlySavings * 25;
+  const billWithSolarGero = currentBill * 0.15; // 85% reduction (taxa mínima)
+  const monthlySavingsGero = currentBill - billWithSolarGero;
+  const yearlySavingsGero = monthlySavingsGero * 12;
+  const savings25YearsGero = yearlySavingsGero * 25;
   const systemCost = systemSize * 5000;
   const installments = 180;
-  const monthlyPayment = systemCost * 0.0079; // 5.5% a.a. approximation
+  const monthlyPaymentGero = systemCost * 0.0079; // 5.5% a.a.
+  
+  // Cálculos para "Eu Assino"
+  const subscriptionDiscount = 0.15; // 15% de desconto na tarifa
+  const billWithSolarAssino = currentBill * (1 - subscriptionDiscount);
+  const monthlySavingsAssino = currentBill - billWithSolarAssino;
+  const yearlySavingsAssino = monthlySavingsAssino * 12;
+  const savings25YearsAssino = yearlySavingsAssino * 25;
+  const monthlySubscription = consumption * avgTariff * (1 - subscriptionDiscount);
 
   return (
     <section id="simulator" className="py-24 bg-gradient-to-br from-muted/50 to-background">
@@ -54,11 +67,15 @@ export const SimulatorSection = () => {
                     <Input
                       id="consumption"
                       type="number"
-                      value={consumption}
-                      onChange={(e) => setConsumption(Number(e.target.value))}
+                      value={consumption || ""}
+                      onChange={(e) => {
+                        const value = e.target.value === "" ? 0 : Number(e.target.value);
+                        setConsumption(value);
+                      }}
+                      placeholder="Digite seu consumo em kWh"
                       className="pl-12 text-lg h-14"
-                      min="100"
-                      max="2000"
+                      min="0"
+                      max="10000"
                     />
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -67,14 +84,14 @@ export const SimulatorSection = () => {
                 </div>
 
                 <div className="bg-muted/50 rounded-xl p-6 space-y-3">
-                  <h3 className="font-semibold text-lg mb-4">Sistema Recomendado</h3>
+                  <h3 className="font-semibold text-lg mb-4">Informações Base</h3>
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Potência Instalada</span>
-                    <span className="font-bold text-xl">{systemSize} kWp</span>
+                    <span className="text-muted-foreground">Consumo Informado</span>
+                    <span className="font-bold text-xl">{consumption} kWh/mês</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Geração Esperada</span>
-                    <span className="font-bold text-xl">{generation} kWh/mês</span>
+                    <span className="text-muted-foreground">Conta Atual</span>
+                    <span className="font-bold text-xl text-destructive">R$ {currentBill.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">Tarifa Média</span>
@@ -91,77 +108,206 @@ export const SimulatorSection = () => {
                   <TrendingUp className="w-6 h-6 text-accent" />
                   Sua Economia com Sol
                 </CardTitle>
-                <CardDescription>Cenário: Eu Gero</CardDescription>
+                <CardDescription>Escolha o perfil que melhor se adapta a você</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Bills Comparison */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-background rounded-xl p-4 border">
-                    <p className="text-sm text-muted-foreground mb-1">Conta Atual</p>
-                    <p className="text-2xl font-bold text-destructive">
-                      R$ {currentBill.toFixed(2)}
-                    </p>
-                  </div>
-                  <div className="bg-background rounded-xl p-4 border border-accent/50">
-                    <p className="text-sm text-muted-foreground mb-1">Conta com Solar</p>
-                    <p className="text-2xl font-bold text-accent">
-                      R$ {billWithSolar.toFixed(2)}
-                    </p>
-                  </div>
-                </div>
+                {/* Profile Selection */}
+                <Tabs value={profileType} onValueChange={(value) => setProfileType(value as "eu_gero" | "eu_assino")} className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="eu_gero" className="flex items-center gap-2">
+                      <Zap className="w-4 h-4" />
+                      Eu Gero
+                    </TabsTrigger>
+                    <TabsTrigger value="eu_assino" className="flex items-center gap-2">
+                      <DollarSign className="w-4 h-4" />
+                      Eu Assino
+                    </TabsTrigger>
+                  </TabsList>
 
-                {/* Savings */}
-                <div className="space-y-4">
-                  <div className="bg-accent/10 rounded-xl p-6 border border-accent/30">
-                    <div className="flex items-center gap-2 mb-2">
-                      <DollarSign className="w-5 h-5 text-accent" />
-                      <span className="font-semibold">Economia Mensal</span>
-                    </div>
-                    <p className="text-3xl font-bold text-accent">
-                      R$ {monthlySavings.toFixed(2)}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-background rounded-xl p-4 border">
-                      <p className="text-sm text-muted-foreground mb-1">Economia Anual</p>
-                      <p className="text-xl font-bold text-accent">
-                        R$ {yearlySavings.toLocaleString('pt-BR')}
+                  {/* Eu Gero Tab */}
+                  <TabsContent value="eu_gero" className="space-y-6 mt-6">
+                    <div className="bg-background/50 rounded-xl p-4 border">
+                      <p className="text-sm text-muted-foreground mb-2">
+                        <strong>Eu Gero:</strong> Você instala painéis solares na sua propriedade e produz sua própria energia
                       </p>
+                      <div className="grid grid-cols-3 gap-2 mt-3">
+                        <div>
+                          <p className="text-xs text-muted-foreground">Potência</p>
+                          <p className="font-bold">{systemSize} kWp</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Geração</p>
+                          <p className="font-bold">{generation} kWh/mês</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Redução</p>
+                          <p className="font-bold text-accent">85%</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="bg-background rounded-xl p-4 border">
-                      <p className="text-sm text-muted-foreground mb-1">Em 25 anos</p>
-                      <p className="text-xl font-bold text-accent">
-                        R$ {savings25Years.toLocaleString('pt-BR')}
-                      </p>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Financing */}
-                <div className="bg-primary/10 rounded-xl p-6 border border-primary/30">
-                  <h4 className="font-semibold mb-4">Condições de Financiamento</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Valor do Sistema</span>
-                      <span className="font-bold">R$ {systemCost.toLocaleString('pt-BR')}</span>
+                    {/* Bills Comparison */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-background rounded-xl p-4 border">
+                        <p className="text-sm text-muted-foreground mb-1">Conta Atual</p>
+                        <p className="text-2xl font-bold text-destructive">
+                          R$ {currentBill.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="bg-background rounded-xl p-4 border border-accent/50">
+                        <p className="text-sm text-muted-foreground mb-1">Conta com Solar</p>
+                        <p className="text-2xl font-bold text-accent">
+                          R$ {billWithSolarGero.toFixed(2)}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Taxa de Juros</span>
-                      <span className="font-bold">5,5% a.a.</span>
+
+                    {/* Savings */}
+                    <div className="space-y-4">
+                      <div className="bg-accent/10 rounded-xl p-6 border border-accent/30">
+                        <div className="flex items-center gap-2 mb-2">
+                          <DollarSign className="w-5 h-5 text-accent" />
+                          <span className="font-semibold">Economia Mensal</span>
+                        </div>
+                        <p className="text-3xl font-bold text-accent">
+                          R$ {monthlySavingsGero.toFixed(2)}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-background rounded-xl p-4 border">
+                          <p className="text-sm text-muted-foreground mb-1">Economia Anual</p>
+                          <p className="text-xl font-bold text-accent">
+                            R$ {yearlySavingsGero.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                        </div>
+                        <div className="bg-background rounded-xl p-4 border">
+                          <p className="text-sm text-muted-foreground mb-1">Em 25 anos</p>
+                          <p className="text-xl font-bold text-accent">
+                            R$ {savings25YearsGero.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Parcelas</span>
-                      <span className="font-bold">{installments}x</span>
+
+                    {/* Financing */}
+                    <div className="bg-primary/10 rounded-xl p-6 border border-primary/30">
+                      <h4 className="font-semibold mb-4">Condições de Financiamento</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Valor do Sistema</span>
+                          <span className="font-bold">R$ {systemCost.toLocaleString('pt-BR')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Taxa de Juros</span>
+                          <span className="font-bold">5,5% a.a.</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Parcelas</span>
+                          <span className="font-bold">{installments}x</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2 border-t">
+                          <span className="text-muted-foreground">Valor da Parcela</span>
+                          <span className="text-2xl font-bold text-primary">
+                            R$ {monthlyPaymentGero.toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center pt-2 border-t">
-                      <span className="text-muted-foreground">Valor da Parcela</span>
-                      <span className="text-2xl font-bold text-primary">
-                        R$ {monthlyPayment.toFixed(2)}
-                      </span>
+                  </TabsContent>
+
+                  {/* Eu Assino Tab */}
+                  <TabsContent value="eu_assino" className="space-y-6 mt-6">
+                    <div className="bg-background/50 rounded-xl p-4 border">
+                      <p className="text-sm text-muted-foreground mb-2">
+                        <strong>Eu Assino:</strong> Você assina créditos de energia de uma fazenda solar cooperativa, sem instalação
+                      </p>
+                      <div className="grid grid-cols-3 gap-2 mt-3">
+                        <div>
+                          <p className="text-xs text-muted-foreground">Desconto</p>
+                          <p className="font-bold text-accent">15%</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Sem Instalação</p>
+                          <p className="font-bold">R$ 0</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Mensalidade</p>
+                          <p className="font-bold">R$ {monthlySubscription.toFixed(2)}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+
+                    {/* Bills Comparison */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-background rounded-xl p-4 border">
+                        <p className="text-sm text-muted-foreground mb-1">Conta Atual</p>
+                        <p className="text-2xl font-bold text-destructive">
+                          R$ {currentBill.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="bg-background rounded-xl p-4 border border-accent/50">
+                        <p className="text-sm text-muted-foreground mb-1">Com Assinatura</p>
+                        <p className="text-2xl font-bold text-accent">
+                          R$ {billWithSolarAssino.toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Savings */}
+                    <div className="space-y-4">
+                      <div className="bg-accent/10 rounded-xl p-6 border border-accent/30">
+                        <div className="flex items-center gap-2 mb-2">
+                          <DollarSign className="w-5 h-5 text-accent" />
+                          <span className="font-semibold">Economia Mensal</span>
+                        </div>
+                        <p className="text-3xl font-bold text-accent">
+                          R$ {monthlySavingsAssino.toFixed(2)}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-background rounded-xl p-4 border">
+                          <p className="text-sm text-muted-foreground mb-1">Economia Anual</p>
+                          <p className="text-xl font-bold text-accent">
+                            R$ {yearlySavingsAssino.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                        </div>
+                        <div className="bg-background rounded-xl p-4 border">
+                          <p className="text-sm text-muted-foreground mb-1">Em 25 anos</p>
+                          <p className="text-xl font-bold text-accent">
+                            R$ {savings25YearsAssino.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Subscription Info */}
+                    <div className="bg-primary/10 rounded-xl p-6 border border-primary/30">
+                      <h4 className="font-semibold mb-4">Assinatura Mensal</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Valor Base da Energia</span>
+                          <span className="font-bold">R$ {currentBill.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Desconto</span>
+                          <span className="font-bold text-accent">15%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Sem Taxa de Instalação</span>
+                          <span className="font-bold text-accent">R$ 0</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2 border-t">
+                          <span className="text-muted-foreground">Mensalidade Total</span>
+                          <span className="text-2xl font-bold text-primary">
+                            R$ {monthlySubscription.toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
 
                 <Button className="w-full bg-primary hover:bg-primary/90" size="lg">
                   Solicitar Proposta Personalizada
