@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Zap, ShoppingCart, MapPin, TrendingDown } from "lucide-react";
+import type { FilterOptions } from "./MarketplaceFilters";
 
 interface Token {
   id: string;
@@ -18,7 +19,11 @@ interface Token {
   metadata: any;
 }
 
-export const TokenMarketplace = () => {
+interface TokenMarketplaceProps {
+  filters?: FilterOptions;
+}
+
+export const TokenMarketplace = ({ filters }: TokenMarketplaceProps) => {
   const [tokens, setTokens] = useState<Token[]>([]);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState<string | null>(null);
@@ -26,15 +31,54 @@ export const TokenMarketplace = () => {
 
   useEffect(() => {
     fetchAvailableTokens();
-  }, []);
+  }, [filters]);
 
   const fetchAvailableTokens = async () => {
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('energy_tokens')
         .select('*')
-        .eq('status', 'available')
-        .order('created_at', { ascending: false });
+        .eq('status', 'available');
+
+      // Apply filters
+      if (filters) {
+        if (filters.minPrice > 0 || filters.maxPrice < 10000) {
+          query = query.gte('total_value', filters.minPrice).lte('total_value', filters.maxPrice);
+        }
+        
+        if (filters.minKwh > 0 || filters.maxKwh < 100000) {
+          query = query.gte('amount_kwh', filters.minKwh).lte('amount_kwh', filters.maxKwh);
+        }
+
+        if (filters.searchTerm) {
+          query = query.ilike('farm_name', `%${filters.searchTerm}%`);
+        }
+
+        // Apply sorting
+        switch (filters.sortBy) {
+          case 'price-asc':
+            query = query.order('total_value', { ascending: true });
+            break;
+          case 'price-desc':
+            query = query.order('total_value', { ascending: false });
+            break;
+          case 'kwh-asc':
+            query = query.order('amount_kwh', { ascending: true });
+            break;
+          case 'kwh-desc':
+            query = query.order('amount_kwh', { ascending: false });
+            break;
+          case 'discount':
+            query = query.order('price_per_kwh', { ascending: true });
+            break;
+          default:
+            query = query.order('created_at', { ascending: false });
+        }
+      } else {
+        query = query.order('created_at', { ascending: false });
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
       setTokens(data || []);
@@ -125,9 +169,11 @@ export const TokenMarketplace = () => {
         <CardContent className="py-12">
           <div className="text-center">
             <Zap className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-50" />
-            <h3 className="text-xl font-semibold mb-2">Nenhum token disponível</h3>
+            <h3 className="text-xl font-semibold mb-2">Nenhum token encontrado</h3>
             <p className="text-muted-foreground">
-              Novos tokens de energia serão listados em breve
+              {filters?.searchTerm 
+                ? 'Tente ajustar os filtros de busca' 
+                : 'Novos tokens de energia serão listados em breve'}
             </p>
           </div>
         </CardContent>
