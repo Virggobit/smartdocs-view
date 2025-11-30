@@ -248,6 +248,8 @@ export type Database = {
         | "instalador"
         | "admin_banco"
         | "gestor_cooperativa"
+        | "parceiro_financeiro"
+        | "gestor_distribuicao"
       bill_status: "pending_upload" | "processing" | "validated" | "invalid"
       credit_status:
         | "pending"
@@ -389,6 +391,8 @@ export const Constants = {
         "instalador",
         "admin_banco",
         "gestor_cooperativa",
+        "parceiro_financeiro",
+        "gestor_distribuicao",
       ],
       bill_status: ["pending_upload", "processing", "validated", "invalid"],
       credit_status: [
