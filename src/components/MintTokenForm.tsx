@@ -39,6 +39,10 @@ export const MintTokenForm = ({ onSuccess }: { onSuccess: () => void }) => {
           price_per_kwh: parseFloat(formData.pricePerKwh),
           created_by: userData.user.id,
           status: 'available',
+          metadata: {
+            creator_id: userData.user.id,
+            created_at: new Date().toISOString(),
+          },
         })
         .select()
         .single();

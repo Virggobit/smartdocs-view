@@ -1,4 +1,4 @@
-import { Home, BarChart3, Calculator, BookOpen, Settings, Sun, LogOut } from 'lucide-react';
+import { Home, BarChart3, Calculator, BookOpen, Store, Settings, Sun, LogOut } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
@@ -11,6 +11,7 @@ export const AppSidebar = () => {
     { to: '/', icon: Home, label: 'Início' },
     { to: '/dashboard', icon: BarChart3, label: 'Dashboard' },
     { to: '/simulador', icon: Calculator, label: 'Simulador' },
+    { to: '/marketplace', icon: Store, label: 'Marketplace' },
     { to: '/trilhas', icon: BookOpen, label: 'Trilhas' },
     { to: '/configuracoes', icon: Settings, label: 'Configurações' },
   ];
