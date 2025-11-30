@@ -17,7 +17,7 @@ const signupSchema = z.object({
   email: z.string().trim().email('Email inválido').max(255, 'Email muito longo'),
   phone: z.string().trim().min(10, 'Telefone inválido').max(20, 'Telefone inválido'),
   password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres').max(100, 'Senha muito longa'),
-  role: z.enum(['cliente_gero', 'cliente_assino', 'instalador', 'admin_banco', 'gestor_cooperativa'], { required_error: 'Escolha um perfil' }),
+  role: z.enum(['cliente_gero', 'cliente_assino', 'instalador', 'admin_banco', 'gestor_cooperativa', 'parceiro_financeiro', 'gestor_distribuicao'], { required_error: 'Escolha um perfil' }),
 });
 
 const loginSchema = z.object({
@@ -33,7 +33,7 @@ const Auth = () => {
     email: '',
     phone: '',
     password: '',
-    role: '' as 'cliente_gero' | 'cliente_assino' | 'instalador' | 'admin_banco' | 'gestor_cooperativa' | '',
+    role: '' as 'cliente_gero' | 'cliente_assino' | 'instalador' | 'admin_banco' | 'gestor_cooperativa' | 'parceiro_financeiro' | 'gestor_distribuicao' | '',
   });
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -246,6 +246,28 @@ const Auth = () => {
                         </Label>
                         <p className="text-sm text-muted-foreground">
                           Administro fazendas solares e cooperativas
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
+                      <RadioGroupItem value="parceiro_financeiro" id="parceiro_financeiro" className="mt-1" />
+                      <div className="flex-1">
+                        <Label htmlFor="parceiro_financeiro" className="font-semibold cursor-pointer">
+                          Parceiro Financeiro
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          Parceiro Banco do Brasil - financiamento direto
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3 p-4 border rounded-lg hover:border-primary transition-colors">
+                      <RadioGroupItem value="gestor_distribuicao" id="gestor_distribuicao" className="mt-1" />
+                      <div className="flex-1">
+                        <Label htmlFor="gestor_distribuicao" className="font-semibold cursor-pointer">
+                          Gestor de Distribuição
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          Cooperativa/Consórcio - gestão e tokenização de créditos
                         </p>
                       </div>
                     </div>

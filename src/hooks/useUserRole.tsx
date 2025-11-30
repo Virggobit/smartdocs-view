@@ -7,7 +7,9 @@ export type AppRole =
   | 'cliente_assino' 
   | 'instalador' 
   | 'admin_banco' 
-  | 'gestor_cooperativa';
+  | 'gestor_cooperativa'
+  | 'parceiro_financeiro'
+  | 'gestor_distribuicao';
 
 export const useUserRole = () => {
   const { user } = useAuth();
@@ -48,6 +50,8 @@ export const useUserRole = () => {
   const isInstalador = hasRole('instalador');
   const isAdmin = hasRole('admin_banco');
   const isGestor = hasRole('gestor_cooperativa');
+  const isFinanciador = hasRole('parceiro_financeiro');
+  const isDistribuidor = hasRole('gestor_distribuicao');
 
   return {
     roles,
@@ -57,6 +61,8 @@ export const useUserRole = () => {
     isInstalador,
     isAdmin,
     isGestor,
+    isFinanciador,
+    isDistribuidor,
     primaryRole: roles[0] || null
   };
 };
