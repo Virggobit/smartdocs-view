@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, TrendingDown, Zap, AlertTriangle, TrendingUp, Clock } from "lucide-react";
+import { Users, TrendingDown, Zap, AlertTriangle, TrendingUp, Clock, Filter } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 const monthlyGrowth = [
   { month: "Jun", clients: 120 },
@@ -38,16 +41,62 @@ const statusColors: Record<string, string> = {
 };
 
 export const DashboardSection = () => {
+  const [selectedTrilha, setSelectedTrilha] = useState<string>("all");
+
+  const trilhas = [
+    { value: "all", label: "Todas as Trilhas" },
+    { value: "Eu Gero", label: "Eu Gero" },
+    { value: "Eu Assino", label: "Eu Assino" },
+    { value: "Eu Instalo", label: "Eu Instalo" },
+    { value: "Eu Financio", label: "Eu Financio" },
+    { value: "Eu Distribuo", label: "Eu Distribuo" },
+  ];
+
+  // Filter data based on selected trilha
+  const filteredAccounts = selectedTrilha === "all" 
+    ? recentAccounts 
+    : recentAccounts.filter(acc => acc.trilha === selectedTrilha);
+
+  const filteredTrilhaData = selectedTrilha === "all"
+    ? trilhaData
+    : trilhaData.filter(t => t.name === selectedTrilha);
+
+  const totalClients = selectedTrilha === "all" 
+    ? 520 
+    : trilhaData.find(t => t.name === selectedTrilha)?.value || 0;
+
   return (
     <section className="py-24 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Dashboard <span className="text-primary">Analytics</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Visão completa do impacto da Sol no setor de energia solar
           </p>
+        </div>
+
+        {/* Filter Section */}
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <Filter className="h-5 w-5 text-muted-foreground" />
+          <Select value={selectedTrilha} onValueChange={setSelectedTrilha}>
+            <SelectTrigger className="w-[280px]">
+              <SelectValue placeholder="Selecione uma trilha" />
+            </SelectTrigger>
+            <SelectContent>
+              {trilhas.map((trilha) => (
+                <SelectItem key={trilha.value} value={trilha.value}>
+                  {trilha.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {selectedTrilha !== "all" && (
+            <Badge variant="secondary" className="text-sm">
+              Filtrando por: {selectedTrilha}
+            </Badge>
+          )}
         </div>
 
         {/* KPIs */}
@@ -58,10 +107,10 @@ export const DashboardSection = () => {
               <Users className="h-5 w-5 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">520</div>
+              <div className="text-3xl font-bold">{totalClients}</div>
               <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
                 <TrendingUp className="h-3 w-3 text-accent" />
-                +26.8% vs mês anterior
+                {selectedTrilha === "all" ? "+26.8% vs mês anterior" : "Total de clientes"}
               </p>
             </CardContent>
           </Card>
@@ -143,14 +192,18 @@ export const DashboardSection = () => {
           <Card className="border-2">
             <CardHeader>
               <CardTitle>Distribuição por Trilhas</CardTitle>
-              <CardDescription>Todas as modalidades da plataforma Sol</CardDescription>
+              <CardDescription>
+                {selectedTrilha === "all" 
+                  ? "Todas as modalidades da plataforma Sol" 
+                  : `Dados da trilha ${selectedTrilha}`}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-center">
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
-                      data={trilhaData}
+                      data={filteredTrilhaData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -159,7 +212,7 @@ export const DashboardSection = () => {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {trilhaData.map((entry, index) => (
+                      {filteredTrilhaData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
@@ -197,22 +250,31 @@ export const DashboardSection = () => {
         <Card className="border-2">
           <CardHeader>
             <CardTitle>Últimas Contas Criadas</CardTitle>
-            <CardDescription>10 cadastros mais recentes no sistema</CardDescription>
+            <CardDescription>
+              {selectedTrilha === "all"
+                ? "10 cadastros mais recentes no sistema"
+                : `Cadastros da trilha ${selectedTrilha}`}
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Cliente</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">CPF</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Trilha</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Status</th>
-                    <th className="text-left py-3 px-4 font-semibold text-sm">Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentAccounts.map((account, index) => (
+            {filteredAccounts.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                Nenhum cadastro encontrado para esta trilha
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-3 px-4 font-semibold text-sm">Cliente</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm">CPF</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm">Trilha</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm">Status</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm">Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredAccounts.map((account, index) => (
                     <tr key={index} className="border-b last:border-0 hover:bg-muted/50 transition-colors">
                       <td className="py-3 px-4 font-medium">{account.name}</td>
                       <td className="py-3 px-4 text-muted-foreground">{account.cpf}</td>
@@ -245,6 +307,7 @@ export const DashboardSection = () => {
                 </tbody>
               </table>
             </div>
+            )}
           </CardContent>
         </Card>
       </div>
