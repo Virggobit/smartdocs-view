@@ -19,6 +19,7 @@ import InstallerDashboard from "./pages/InstallerDashboard";
 import CooperativaDashboard from "./pages/CooperativaDashboard";
 import FinanciadorDashboard from "./pages/FinanciadorDashboard";
 import DistribuidorDashboard from "./pages/DistribuidorDashboard";
+import ProjectStructure from "./pages/ProjectStructure";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -136,6 +137,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <DashboardLayout><Settings /></DashboardLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/project-structure" 
+              element={
+                <ProtectedRoute>
+                  <ProjectStructure />
                 </ProtectedRoute>
               } 
             />
