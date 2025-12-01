@@ -1,0 +1,497 @@
+{
+  "metadata": {
+    "projectName": "vite_react_shadcn_ts",
+    "version": "0.0.0",
+    "type": "Solar Energy Platform",
+    "framework": "React + Vite",
+    "uiLibrary": "Shadcn UI + Radix UI",
+    "backend": "Lovable Cloud (Supabase)",
+    "description": "Plataforma completa de energia solar com marketplace, simulador, sistema de tokens de energia e dashboards por perfil de usuário"
+  },
+  
+  "technology": {
+    "runtime": "Vite 5.4.19",
+    "framework": "React 18.3.1",
+    "language": "TypeScript 5.8.3",
+    "styling": "Tailwind CSS 3.4.17",
+    "stateManagement": "TanStack Query 5.83.0",
+    "routing": "React Router DOM 6.30.1",
+    "backend": "Supabase 2.85.0",
+    "forms": "React Hook Form 7.61.1 + Zod 3.25.76",
+    "charts": "Recharts 2.15.4"
+  },
+
+  "dependencies": {
+    "ui": {
+      "@radix-ui/react-accordion": "^1.2.11",
+      "@radix-ui/react-alert-dialog": "^1.1.14",
+      "@radix-ui/react-avatar": "^1.1.10",
+      "@radix-ui/react-checkbox": "^1.3.2",
+      "@radix-ui/react-dialog": "^1.1.14",
+      "@radix-ui/react-dropdown-menu": "^2.1.15",
+      "@radix-ui/react-popover": "^1.1.14",
+      "@radix-ui/react-select": "^2.2.5",
+      "@radix-ui/react-tabs": "^1.1.12",
+      "@radix-ui/react-toast": "^1.2.14",
+      "@radix-ui/react-tooltip": "^1.2.7",
+      "lucide-react": "^0.462.0",
+      "sonner": "^1.7.4",
+      "next-themes": "^0.3.0"
+    },
+    "backend": {
+      "@supabase/supabase-js": "^2.85.0",
+      "@tanstack/react-query": "^5.83.0"
+    },
+    "forms": {
+      "react-hook-form": "^7.61.1",
+      "@hookform/resolvers": "^3.10.0",
+      "zod": "^3.25.76"
+    },
+    "utilities": {
+      "class-variance-authority": "^0.7.1",
+      "clsx": "^2.1.1",
+      "tailwind-merge": "^2.6.0",
+      "date-fns": "^3.6.0"
+    },
+    "charts": {
+      "recharts": "^2.15.4"
+    }
+  },
+
+  "typescript": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "strict": false,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+
+  "routes": {
+    "public": [
+      {
+        "path": "/",
+        "component": "Index",
+        "description": "Landing page pública com Hero, SolBot, SimulatorSection e TrilhasSection",
+        "protected": false,
+        "layout": "none"
+      },
+      {
+        "path": "/auth",
+        "component": "Auth",
+        "description": "Página de login e cadastro",
+        "protected": false,
+        "layout": "none"
+      },
+      {
+        "path": "*",
+        "component": "NotFound",
+        "description": "Página 404",
+        "protected": false,
+        "layout": "none"
+      }
+    ],
+    "protected": [
+      {
+        "path": "/conectar-energia",
+        "component": "ConnectEnergy",
+        "description": "Conectar com Open Finance para análise de crédito",
+        "protected": true,
+        "layout": "none",
+        "requiresAuth": true
+      },
+      {
+        "path": "/dashboard",
+        "component": "Dashboard",
+        "description": "Dashboard principal do usuário",
+        "protected": true,
+        "layout": "sidebar",
+        "requiresAuth": true
+      },
+      {
+        "path": "/admin",
+        "component": "AdminDashboard",
+        "description": "Dashboard administrativo",
+        "protected": true,
+        "layout": "none",
+        "requiresAuth": true,
+        "requiredRole": "admin_banco"
+      },
+      {
+        "path": "/instalador",
+        "component": "InstallerDashboard",
+        "description": "Dashboard para instaladores",
+        "protected": true,
+        "layout": "none",
+        "requiresAuth": true,
+        "requiredRole": "instalador"
+      },
+      {
+        "path": "/cooperativa",
+        "component": "CooperativaDashboard",
+        "description": "Dashboard para gestores de cooperativa",
+        "protected": true,
+        "layout": "none",
+        "requiresAuth": true,
+        "requiredRole": "gestor_cooperativa"
+      },
+      {
+        "path": "/financiador",
+        "component": "FinanciadorDashboard",
+        "description": "Dashboard para parceiros financeiros",
+        "protected": true,
+        "layout": "none",
+        "requiresAuth": true,
+        "requiredRole": "parceiro_financeiro"
+      },
+      {
+        "path": "/distribuidor",
+        "component": "DistribuidorDashboard",
+        "description": "Dashboard para gestores de distribuição",
+        "protected": true,
+        "layout": "none",
+        "requiresAuth": true,
+        "requiredRole": "gestor_distribuicao"
+      },
+      {
+        "path": "/simulador",
+        "component": "Simulator",
+        "description": "Simulador de economia de energia solar com comparação Eu Gero vs Eu Assino",
+        "protected": true,
+        "layout": "sidebar",
+        "requiresAuth": true
+      },
+      {
+        "path": "/trilhas",
+        "component": "Trilhas",
+        "description": "Trilhas de energia solar (Eu Gero, Eu Assino, Eu Instalo, etc.)",
+        "protected": true,
+        "layout": "sidebar",
+        "requiresAuth": true
+      },
+      {
+        "path": "/marketplace",
+        "component": "Marketplace",
+        "description": "Marketplace de tokens de energia com filtros, compra e transferência",
+        "protected": true,
+        "layout": "sidebar",
+        "requiresAuth": true
+      },
+      {
+        "path": "/configuracoes",
+        "component": "Settings",
+        "description": "Configurações da conta do usuário",
+        "protected": true,
+        "layout": "sidebar",
+        "requiresAuth": true
+      }
+    ]
+  },
+
+  "components": {
+    "layout": [
+      {
+        "name": "AppSidebar",
+        "path": "src/components/AppSidebar.tsx",
+        "description": "Sidebar principal com navegação do aplicativo"
+      },
+      {
+        "name": "Navigation",
+        "path": "src/components/Navigation.tsx",
+        "description": "Componente de navegação"
+      },
+      {
+        "name": "NavLink",
+        "path": "src/components/NavLink.tsx",
+        "description": "Link customizado para navegação"
+      },
+      {
+        "name": "ProtectedRoute",
+        "path": "src/components/ProtectedRoute.tsx",
+        "description": "HOC para proteger rotas com autenticação"
+      }
+    ],
+    "features": [
+      {
+        "name": "Hero",
+        "path": "src/components/Hero.tsx",
+        "description": "Hero section da landing page"
+      },
+      {
+        "name": "SolBot",
+        "path": "src/components/SolBot.tsx",
+        "description": "Chatbot de IA para consultoria solar (integração com edge function)"
+      },
+      {
+        "name": "SimulatorSection",
+        "path": "src/components/SimulatorSection.tsx",
+        "description": "Seção de simulação de economia solar com comparação de perfis"
+      },
+      {
+        "name": "TrilhasSection",
+        "path": "src/components/TrilhasSection.tsx",
+        "description": "Seção de trilhas de energia solar"
+      },
+      {
+        "name": "DashboardSection",
+        "path": "src/components/DashboardSection.tsx",
+        "description": "Seção reutilizável para dashboards"
+      },
+      {
+        "name": "TokenMarketplace",
+        "path": "src/components/TokenMarketplace.tsx",
+        "description": "Marketplace de tokens de energia"
+      },
+      {
+        "name": "TokenTransfer",
+        "path": "src/components/TokenTransfer.tsx",
+        "description": "Componente para transferir tokens de energia entre usuários"
+      },
+      {
+        "name": "TokensList",
+        "path": "src/components/TokensList.tsx",
+        "description": "Lista de tokens de energia"
+      },
+      {
+        "name": "MintTokenForm",
+        "path": "src/components/MintTokenForm.tsx",
+        "description": "Formulário para criar novos tokens de energia"
+      },
+      {
+        "name": "MyPurchases",
+        "path": "src/components/MyPurchases.tsx",
+        "description": "Lista de compras de tokens do usuário"
+      },
+      {
+        "name": "TransactionHistory",
+        "path": "src/components/TransactionHistory.tsx",
+        "description": "Histórico de transações de tokens"
+      },
+      {
+        "name": "MarketplaceFilters",
+        "path": "src/components/MarketplaceFilters.tsx",
+        "description": "Filtros para o marketplace de tokens"
+      },
+      {
+        "name": "CooperativeTermSignature",
+        "path": "src/components/CooperativeTermSignature.tsx",
+        "description": "Assinatura digital de termos da cooperativa"
+      }
+    ],
+    "ui": [
+      "accordion", "alert-dialog", "alert", "aspect-ratio", "avatar", "badge", 
+      "breadcrumb", "button", "calendar", "card", "carousel", "chart", "checkbox",
+      "collapsible", "command", "context-menu", "dialog", "drawer", "dropdown-menu",
+      "form", "hover-card", "input", "input-otp", "label", "menubar", "navigation-menu",
+      "pagination", "popover", "progress", "radio-group", "scroll-area", "select",
+      "separator", "sheet", "sidebar", "skeleton", "slider", "switch", "table",
+      "tabs", "textarea", "toast", "toaster", "toggle", "toggle-group", "tooltip"
+    ]
+  },
+
+  "database": {
+    "provider": "Lovable Cloud (Supabase)",
+    "projectId": "nxjeiwjzxioktjbaisde",
+    "tables": [
+      {
+        "name": "profiles",
+        "description": "Perfis de usuários com informações adicionais",
+        "hasRLS": true
+      },
+      {
+        "name": "user_roles",
+        "description": "Papéis e permissões dos usuários",
+        "hasRLS": true,
+        "roles": [
+          "cliente_gero",
+          "cliente_assino",
+          "instalador",
+          "admin_banco",
+          "gestor_cooperativa",
+          "parceiro_financeiro",
+          "gestor_distribuicao"
+        ]
+      },
+      {
+        "name": "energy_tokens",
+        "description": "Tokens de energia solar (NFTs representando kWh)",
+        "hasRLS": true
+      },
+      {
+        "name": "token_transactions",
+        "description": "Histórico de transações de tokens",
+        "hasRLS": true
+      },
+      {
+        "name": "energy_bills",
+        "description": "Contas de energia dos usuários (para análise)",
+        "hasRLS": true
+      },
+      {
+        "name": "credit_analysis",
+        "description": "Análises de crédito dos usuários",
+        "hasRLS": true
+      },
+      {
+        "name": "open_finance_connections",
+        "description": "Conexões com Open Finance para análise financeira",
+        "hasRLS": true
+      },
+      {
+        "name": "cooperative_terms",
+        "description": "Termos e assinaturas da cooperativa",
+        "hasRLS": true
+      }
+    ]
+  },
+
+  "edgeFunctions": [
+    {
+      "name": "solbot",
+      "path": "supabase/functions/solbot/index.ts",
+      "description": "Chatbot de IA para consultoria solar usando Lovable AI",
+      "requiresAuth": false
+    },
+    {
+      "name": "analyze-energy-bill",
+      "path": "supabase/functions/analyze-energy-bill/index.ts",
+      "description": "Análise de contas de energia usando IA",
+      "requiresAuth": true
+    },
+    {
+      "name": "connect-open-finance",
+      "path": "supabase/functions/connect-open-finance/index.ts",
+      "description": "Integração com Open Finance para análise de crédito",
+      "requiresAuth": true
+    }
+  ],
+
+  "authentication": {
+    "provider": "Lovable Cloud Auth (Supabase Auth)",
+    "methods": ["email", "password"],
+    "features": [
+      "Sign up",
+      "Sign in",
+      "Sign out",
+      "Protected routes",
+      "Role-based access control"
+    ]
+  },
+
+  "features": [
+    {
+      "name": "Marketplace de Tokens",
+      "description": "Compra e venda de tokens de energia solar (kWh tokenizados)",
+      "status": "implemented"
+    },
+    {
+      "name": "Simulador Solar",
+      "description": "Simulação de economia com energia solar comparando perfis Eu Gero e Eu Assino",
+      "status": "implemented"
+    },
+    {
+      "name": "Chatbot SolBot",
+      "description": "Assistente virtual com IA para consultoria solar",
+      "status": "implemented"
+    },
+    {
+      "name": "Sistema de Trilhas",
+      "description": "Diferentes perfis de jornada do usuário (Gero, Assino, Instalo, Financio, Distribuo)",
+      "status": "implemented"
+    },
+    {
+      "name": "Análise de Crédito",
+      "description": "Integração com Open Finance para análise de crédito automática",
+      "status": "implemented"
+    },
+    {
+      "name": "Transferência de Tokens",
+      "description": "Sistema de transferência de tokens entre usuários",
+      "status": "implemented"
+    },
+    {
+      "name": "Dashboards por Perfil",
+      "description": "Dashboards específicos para cada tipo de usuário",
+      "status": "implemented"
+    },
+    {
+      "name": "Sistema de Cooperativa",
+      "description": "Assinatura digital de termos cooperativos",
+      "status": "implemented"
+    }
+  ],
+
+  "structure": {
+    "src": {
+      "assets": ["hero-solar-house.jpg", "logo-sol.png"],
+      "components": {
+        "ui": "Componentes de UI do Shadcn",
+        "features": [
+          "AppSidebar", "CooperativeTermSignature", "DashboardSection",
+          "Hero", "MarketplaceFilters", "MintTokenForm", "MyPurchases",
+          "NavLink", "Navigation", "ProtectedRoute", "SimulatorSection",
+          "SolBot", "TokenMarketplace", "TokenTransfer", "TokensList",
+          "TransactionHistory", "TrilhasSection"
+        ]
+      },
+      "hooks": ["useAuth", "useUserRole", "use-mobile", "use-toast"],
+      "integrations": {
+        "supabase": ["client.ts", "types.ts (auto-generated)"]
+      },
+      "lib": ["utils.ts"],
+      "pages": [
+        "Index", "Auth", "Dashboard", "Simulator", "Trilhas", "Marketplace",
+        "Settings", "ConnectEnergy", "AdminDashboard", "InstallerDashboard",
+        "CooperativaDashboard", "FinanciadorDashboard", "DistribuidorDashboard",
+        "NotFound"
+      ]
+    },
+    "supabase": {
+      "functions": ["solbot", "analyze-energy-bill", "connect-open-finance"],
+      "migrations": "Migrations SQL automáticas",
+      "config": "config.toml"
+    },
+    "config": [
+      "tailwind.config.ts",
+      "vite.config.ts",
+      "tsconfig.json",
+      "tsconfig.app.json",
+      "tsconfig.node.json",
+      "components.json",
+      "eslint.config.js",
+      "postcss.config.js"
+    ]
+  },
+
+  "environment": {
+    "variables": {
+      "VITE_SUPABASE_URL": "URL do projeto Supabase",
+      "VITE_SUPABASE_PUBLISHABLE_KEY": "Chave pública do Supabase",
+      "VITE_SUPABASE_PROJECT_ID": "ID do projeto Supabase"
+    }
+  },
+
+  "scripts": {
+    "dev": "Inicia servidor de desenvolvimento",
+    "build": "Compila para produção",
+    "build:dev": "Compila em modo desenvolvimento",
+    "lint": "Executa ESLint",
+    "preview": "Preview da build de produção"
+  },
+
+  "designSystem": {
+    "colors": {
+      "primary": "Solar energy theme colors",
+      "secondary": "Secondary theme colors",
+      "accent": "Accent colors",
+      "background": "Background colors",
+      "foreground": "Foreground/text colors"
+    },
+    "theme": "Sistema de cores HSL com suporte a dark mode via next-themes",
+    "animations": "tailwindcss-animate com animações customizadas",
+    "typography": "Tailwind Typography para conteúdo formatado"
+  }
+}
