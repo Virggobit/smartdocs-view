@@ -1,7 +1,9 @@
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Battery, Users, Zap, TrendingUp } from "lucide-react";
+import { Battery, Users, Zap, TrendingUp, FileSignature, Store, BarChart3, Sun } from "lucide-react";
+import { NextActions } from "@/components/NextActions";
+import { StatusBadge } from "@/components/StatusBadge";
 
 const CooperativaDashboard = () => {
   const allocations = [
@@ -11,20 +13,33 @@ const CooperativaDashboard = () => {
     { name: "Pedro Silva", allocation: 250, savings: 57 }
   ];
 
+  const actions = [
+    { title: "Aprovar Novos Cooperados", description: "12 termos de adesão aguardando revisão", href: "/cooperativa", icon: FileSignature },
+    { title: "Gerenciar Marketplace", description: "Acompanhe vendas de tokens kWh", href: "/marketplace", icon: Store },
+    { title: "Alocar Geração Mensal", description: "Distribua créditos entre cooperados", href: "/cooperativa", icon: Sun },
+    { title: "Relatório de Performance", description: "Geração e economia da fazenda solar", href: "/dashboard", icon: BarChart3 },
+  ];
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <main className="flex-1 p-8 bg-gradient-to-br from-background via-background to-primary/5">
           <div className="max-w-7xl mx-auto space-y-8">
-            <div>
-              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Gestão da Cooperativa
-              </h1>
-              <p className="text-muted-foreground">
-                Administração da Fazenda Solar e alocação de créditos
-              </p>
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <div>
+                <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  Gestão da Cooperativa
+                </h1>
+                <p className="text-muted-foreground">
+                  Administração da Fazenda Solar e alocação de créditos
+                </p>
+              </div>
+              <StatusBadge tone="success" label="Fazenda operacional" />
             </div>
+
+            <NextActions actions={actions} />
+
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card>
