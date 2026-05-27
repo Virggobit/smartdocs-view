@@ -51,11 +51,16 @@ const InstallerDashboard = () => {
               <div>
                 <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                   Painel do Instalador
-              </h1>
-              <p className="text-muted-foreground">
-                Leads qualificados com crédito pré-aprovado
-              </p>
+                </h1>
+                <p className="text-muted-foreground">
+                  Leads qualificados com crédito pré-aprovado
+                </p>
+              </div>
+              <StatusBadge tone="pending" label="8 leads novos" />
             </div>
+
+            <NextActions actions={actions} />
+
 
             <div className="grid gap-4 md:grid-cols-3">
               <Card>
