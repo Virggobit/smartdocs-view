@@ -87,7 +87,12 @@ const FinanciadorDashboard = () => {
           </Card>
         </div>
 
+        <div className="mb-8">
+          <NextActions actions={actions} />
+        </div>
+
         <div className="grid md:grid-cols-2 gap-6">
+
           <Card>
             <CardHeader>
               <CardTitle>Análises de Crédito Pendentes</CardTitle>

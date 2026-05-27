@@ -98,7 +98,12 @@ const DistribuidorDashboard = () => {
           </Card>
         </div>
 
+        <div className="mb-8">
+          <NextActions actions={actions} />
+        </div>
+
         <Tabs defaultValue="tokenize" className="space-y-6">
+
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="tokenize" className="flex items-center gap-2">
               <Coins className="w-4 h-4" />
