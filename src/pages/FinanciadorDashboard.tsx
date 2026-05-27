@@ -1,16 +1,29 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, TrendingUp, Users, FileCheck } from "lucide-react";
+import { DollarSign, TrendingUp, Users, FileCheck, BarChart3, ShieldCheck, Store } from "lucide-react";
+import { NextActions } from "@/components/NextActions";
+import { StatusBadge } from "@/components/StatusBadge";
 
 const FinanciadorDashboard = () => {
+  const actions = [
+    { title: "Análises Pendentes", description: "Revise solicitações de crédito aguardando decisão", href: "/financiador", icon: FileCheck },
+    { title: "Acompanhar Carteira", description: "Visão consolidada de contratos ativos", href: "/dashboard", icon: BarChart3 },
+    { title: "Política de Risco", description: "Ajuste parâmetros do Score Sol F", href: "/configuracoes", icon: ShieldCheck },
+    { title: "Marketplace de Energia", description: "Acompanhar lastro tokenizado dos contratos", href: "/marketplace", icon: Store },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
-            Dashboard Parceiro Financeiro
-          </h1>
-          <p className="text-muted-foreground">Gestão de financiamentos e análise de crédito</p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              Dashboard Parceiro Financeiro
+            </h1>
+            <p className="text-muted-foreground">Gestão de financiamentos e análise de crédito</p>
+          </div>
+          <StatusBadge tone="success" label="Inadimplência 2.3%" />
         </div>
+
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -74,7 +87,12 @@ const FinanciadorDashboard = () => {
           </Card>
         </div>
 
+        <div className="mb-8">
+          <NextActions actions={actions} />
+        </div>
+
         <div className="grid md:grid-cols-2 gap-6">
+
           <Card>
             <CardHeader>
               <CardTitle>Análises de Crédito Pendentes</CardTitle>

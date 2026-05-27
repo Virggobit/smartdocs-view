@@ -2,7 +2,9 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, DollarSign, CheckCircle, Clock } from "lucide-react";
+import { MapPin, DollarSign, CheckCircle, Clock, FileText, Wallet, Calculator, BookOpen } from "lucide-react";
+import { NextActions } from "@/components/NextActions";
+import { StatusBadge } from "@/components/StatusBadge";
 
 const InstallerDashboard = () => {
   const leads = [
@@ -32,20 +34,33 @@ const InstallerDashboard = () => {
     }
   ];
 
+  const actions = [
+    { title: "Enviar Orçamentos Pendentes", description: "8 leads aguardando sua proposta", href: "/instalador", icon: FileText },
+    { title: "Acompanhar Recebíveis", description: "Pagamentos imediatos via BB após instalação", href: "/instalador", icon: Wallet },
+    { title: "Simular Projetos", description: "Dimensione sistemas para novos clientes", href: "/simulador", icon: Calculator },
+    { title: "Capacitação Técnica", description: "Trilhas de certificação Sol F", href: "/trilhas", icon: BookOpen },
+  ];
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <main className="flex-1 p-8 bg-gradient-to-br from-background via-background to-primary/5">
           <div className="max-w-7xl mx-auto space-y-8">
-            <div>
-              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Painel do Instalador
-              </h1>
-              <p className="text-muted-foreground">
-                Leads qualificados com crédito pré-aprovado
-              </p>
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <div>
+                <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  Painel do Instalador
+                </h1>
+                <p className="text-muted-foreground">
+                  Leads qualificados com crédito pré-aprovado
+                </p>
+              </div>
+              <StatusBadge tone="pending" label="8 leads novos" />
             </div>
+
+            <NextActions actions={actions} />
+
 
             <div className="grid gap-4 md:grid-cols-3">
               <Card>

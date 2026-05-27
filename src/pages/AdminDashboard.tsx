@@ -1,23 +1,36 @@
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, DollarSign, Users, TrendingUp } from "lucide-react";
+import { Activity, DollarSign, Users, TrendingUp, FileCheck, ShieldCheck, BarChart3, Store } from "lucide-react";
+import { NextActions } from "@/components/NextActions";
+import { StatusBadge } from "@/components/StatusBadge";
 
 const AdminDashboard = () => {
+  const actions = [
+    { title: "Revisar Análises de Crédito", description: "3 solicitações aguardando decisão", href: "/admin", icon: FileCheck },
+    { title: "Gerenciar Permissões", description: "Atribuir papéis e roles a usuários", href: "/configuracoes", icon: ShieldCheck },
+    { title: "Relatório de Carteira", description: "Visão consolidada de risco e performance", href: "/dashboard", icon: BarChart3 },
+    { title: "Auditar Marketplace", description: "Acompanhar tokens emitidos e transações", href: "/marketplace", icon: Store },
+  ];
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <main className="flex-1 p-8 bg-gradient-to-br from-background via-background to-primary/5">
           <div className="max-w-7xl mx-auto space-y-8">
-            <div>
-              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Painel Administrativo BB
-              </h1>
-              <p className="text-muted-foreground">
-                Gestão de carteira de crédito e monitoramento de risco
-              </p>
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <div>
+                <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  Painel Administrativo BB
+                </h1>
+                <p className="text-muted-foreground">
+                  Gestão de carteira de crédito e monitoramento de risco
+                </p>
+              </div>
+              <StatusBadge tone="success" label="Operação saudável" />
             </div>
+
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card>
@@ -142,6 +155,9 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
             </div>
+
+            <NextActions actions={actions} />
+
           </div>
         </main>
       </div>

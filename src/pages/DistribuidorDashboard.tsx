@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Network, Zap, Users, TrendingUp, Coins } from "lucide-react";
+import { Network, Zap, Users, TrendingUp, Coins, Store, BarChart3 } from "lucide-react";
 import { MintTokenForm } from "@/components/MintTokenForm";
 import { TokensList } from "@/components/TokensList";
 import { TransactionHistory } from "@/components/TransactionHistory";
+import { NextActions } from "@/components/NextActions";
+import { StatusBadge } from "@/components/StatusBadge";
 
 const DistribuidorDashboard = () => {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -13,15 +15,26 @@ const DistribuidorDashboard = () => {
     setRefreshKey((prev) => prev + 1);
   };
 
+  const actions = [
+    { title: "Tokenizar Geração", description: "Emita novos tokens kWh para o marketplace", href: "/distribuidor", icon: Coins },
+    { title: "Acompanhar Marketplace", description: "Veja vendas e demanda dos assinantes", href: "/marketplace", icon: Store },
+    { title: "Auditar Blockchain", description: "Histórico imutável de transações", href: "/distribuidor", icon: Network },
+    { title: "Relatório de Distribuição", description: "Performance das fazendas conectadas", href: "/dashboard", icon: BarChart3 },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
-            Dashboard Gestor de Distribuição
-          </h1>
-          <p className="text-muted-foreground">Gestão de fazendas solares e tokenização de créditos</p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              Dashboard Gestor de Distribuição
+            </h1>
+            <p className="text-muted-foreground">Gestão de fazendas solares e tokenização de créditos</p>
+          </div>
+          <StatusBadge tone="success" label="8 fazendas online" />
         </div>
+
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -85,7 +98,12 @@ const DistribuidorDashboard = () => {
           </Card>
         </div>
 
+        <div className="mb-8">
+          <NextActions actions={actions} />
+        </div>
+
         <Tabs defaultValue="tokenize" className="space-y-6">
+
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="tokenize" className="flex items-center gap-2">
               <Coins className="w-4 h-4" />
