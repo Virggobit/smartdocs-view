@@ -1,35 +1,50 @@
 ## Objetivo
-
-Preencher o template "Canvas da Solução" (PDF anexado, 1 página, 960×540pt) com o conteúdo da plataforma **Sol — Energia Solar Tokenizada** e entregar como PDF para download em `/mnt/documents/canvas-solucao-SoL-preenchido.pdf`.
+Gerar `/mnt/documents/canvas-modelo-negocio-SoL-preenchido.pdf` usando o template anexado como fundo e sobrepondo o conteúdo dos 9 blocos do Business Model Canvas com base na plataforma **Sol — Energia Solar Tokenizada**.
 
 ## Abordagem técnica
+- Reaproveitar a mesma técnica do canvas anterior: `pypdf` + `reportlab` para gerar overlay e `merge_page` no PDF original (preserva layout, cores e títulos).
+- Calcular coordenadas a partir do layout do template (cabeçalho + 9 blocos em grid 3 colunas no topo / faixa inferior com Custos e Receitas).
+- QA visual obrigatório via `pdftoppm -r 200` para validar quebras de linha, contraste e contenção dentro das caixas.
 
-1. Usar o PDF original como fundo (mantém layout, cores e títulos das 7 caixas do canvas).
-2. Sobrepor o texto de cada campo via `pypdf` + `reportlab` (gerar overlay e fazer `merge_page`).
-3. Coordenadas calculadas a partir do layout 960×540pt do template (cabeçalho + 7 blocos numerados).
-4. QA visual obrigatório: converter para JPG com `pdftoppm -r 200` e revisar texto não cortado, contraste, alinhamento. Iterar até limpo.
+## Conteúdo proposto
 
-## Conteúdo proposto para cada bloco
+**Cabeçalho** — Time: *Sol Team* · Solução: *Sol — Plataforma de Energia Solar Tokenizada* · Integrantes: *(linha para preenchimento manual)*
 
-**Cabeçalho**
-- Time: *Sol Team*
-- Solução: *Sol — Plataforma de Energia Solar Tokenizada*
-- Integrantes: *(deixar linha para preenchimento manual)*
+**1. Parcerias-Chave**
+Banco do Brasil (funding e Open Finance); cooperativas de energia (geração distribuída); instaladores/integradores credenciados; distribuidoras de energia (PAYS na fatura); ANEEL (compliance); provedores de IA/OCR para análise de conta.
 
-**1. Problema** — Famílias de baixa renda e inquilinos ficam fora do crédito tradicional e não conseguem investir em energia solar. Instaladores enfrentam ciclo longo de venda e recebimento. Bancos não têm canal escalável para financiar microgeração.
+**2. Atividades-Chave**
+Análise de crédito alternativa via histórico de conta de luz + Open Finance; tokenização de kWh; operação do marketplace de tokens; orquestração de financiamento (BB ↔ instalador); curadoria de cooperativas; suporte via SolBot (IA).
 
-**2. A Solução** — Plataforma que conecta gerador, consumidor, instalador e financiador via tokens de energia (kWh tokenizados). Usa histórico da conta de luz + Open Finance para aprovar crédito no modelo PAYS (parcela embutida na fatura, menor que a economia) e Cashback para quem aluga.
+**3. Proposta de Valor**
+Acesso à energia solar para quem está fora do crédito tradicional (baixa renda, inquilinos). Modelo PAYS: parcela embutida na fatura **sempre menor que a economia**. Cashback para assinantes de cooperativas. Para instaladores: recebimento imediato e pipeline qualificado. Para o BB: nova classe de ativo com baixa inadimplência.
 
-**3. Usuário** — 5 trilhas: *Eu Gero* (proprietário), *Eu Assino* (inquilino/cooperado), *Eu Instalo* (integrador), *Eu Financio* (BB), *Eu Distribuo* (cooperativa). Marcar: **residencial**, **rural**, **público**.
+**4. Relacionamento**
+Autoatendimento digital com SolBot (IA conversacional); jornada guiada por trilha (Gero, Assino, Instalo, Financio, Distribuo); dashboards personalizados por perfil; assinatura digital do Termo de Adesão ANEEL; suporte humano em casos de exceção.
 
-**4. Como Funciona** — (1) Usuário simula economia → (2) conecta conta de luz + Open Finance → (3) IA analisa crédito → (4) escolhe trilha (gerar ou assinar) → (5) BB libera financiamento e paga instalador → (6) energia gerada vira token no marketplace → (7) parcela debitada na conta de luz (PAYS) ou cashback (assinante).
+**5. Segmento de Clientes**
+- *Eu Gero*: proprietários residenciais/rurais que querem instalar geração própria.
+- *Eu Assino*: inquilinos e famílias de baixa renda sem telhado, via cooperativa.
+- *Eu Instalo*: integradores solares de pequeno e médio porte.
+- *Eu Financio*: Banco do Brasil (parceiro financiador).
+- *Eu Distribuo*: cooperativas de geração compartilhada.
 
-**5. Diferenciais** — Crédito por histórico de pagamento (não score bancário); PAYS garante parcela < economia; tokenização permite excedente virar liquidez; SolBot com IA orienta jornada; integração nativa BB + cooperativas; inclui quem aluga.
+**6. Recursos-Chave**
+Plataforma web + Lovable Cloud (Supabase); motor de Score Sol F (IA); integração Open Finance BB; OCR de conta de luz; smart contracts para tokens de kWh; base de instaladores e cooperativas homologadas; marca co-branded com BB.
 
-**6. Hipóteses a Testar** — Adesão de inquilinos ao modelo cashback; disposição das distribuidoras em embutir parcela na fatura (PAYS); taxa de inadimplência vs. score tradicional; volume de tokens negociados no marketplace; CAC via instaladores parceiros.
+**7. Canais**
+App/web Sol; agências e app do BB (co-branded); rede de instaladores parceiros; cooperativas afiliadas; marketing digital segmentado (baixa renda, rural); parcerias com programas sociais e distribuidoras.
 
-**7. Impacto Estimado** — Ambiental **5**, Social **5**, Econômico **4**, Viabilidade **4**.
+**8. Estrutura de Custos**
+*Fixos:* time de tech/produto, infra cloud, compliance ANEEL/BACEN, licenças de IA.
+*Variáveis:* custo de aquisição (CAC via instaladores/cooperativas), tarifas Open Finance, gateway de pagamento, comissões a parceiros, suporte ao cliente, provisão para inadimplência.
+
+**9. Fontes de Receita**
+- Spread/originação sobre o financiamento (split com BB).
+- Taxa de transação no marketplace de tokens de kWh.
+- Mensalidade SaaS de instaladores e cooperativas (planos por volume).
+- Fee de tokenização (mint) por kWh.
+- Receita de dados/score (modelo B2B para parceiros financeiros).
 
 ## Entrega
-
-Arquivo final em `/mnt/documents/canvas-solucao-SoL-preenchido.pdf` exibido via `<presentation-artifact>` para download.
+Arquivo final em `/mnt/documents/canvas-modelo-negocio-SoL-preenchido.pdf`, apresentado via `<presentation-artifact>` para download. Sem alterações no código da aplicação React.
